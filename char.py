@@ -1,11 +1,14 @@
 import unittest
 
+from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parser import Parser
 
 
 def char(c: str) -> Parser[str]:
     def parser(to_parse: str) -> list[tuple[str, str]]:
-        pass
+        if to_parse[0] != c:
+            return []
+        return [(c, to_parse[1:])]
 
     return Parser(parser)
 
@@ -13,15 +16,12 @@ def char(c: str) -> Parser[str]:
 class TestChar(unittest.TestCase):
     def test_that_parsing_a_different_character_fails(self) -> None:
         h_parser = char('h')
-        parse_result = h_parser('n')
-        self.assertListEqual(parse_result, [])
+        assert_parsing_fails(self, h_parser, 'n')
 
     def test_that_parsing_h_succeeds(self) -> None:
         h_parser = char('h')
-        parse_result = h_parser('h')
-        self.assertListEqual(parse_result, [('h', '')])
+        assert_parsing_succeeds(self, h_parser, 'h').with_result('h')
 
     def test_that_parsing_h_with_remainder_gives_remainder(self) -> None:
         h_parser = char('h')
-        parse_result = h_parser('hoi')
-        self.assertListEqual(parse_result, [('h', 'oi')])
+        assert_parsing_succeeds(self, h_parser, 'h').with_remainder('oi')

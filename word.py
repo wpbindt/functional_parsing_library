@@ -5,7 +5,9 @@ from parser import Parser
 
 def word(word_to_parse_for: str) -> Parser[str]:
     def parser(to_parse: str) -> list[tuple[str, str]]:
-        pass
+        if not to_parse.startswith(word_to_parse_for):
+            return []
+        return [(word_to_parse_for, to_parse[len(word_to_parse_for):])]
 
     return Parser(parser)
 
@@ -22,6 +24,6 @@ class TestWord(unittest.TestCase):
         self.assertListEqual(parse_result, [('hoi', '')])
 
     def test_that_parsing_h_with_remainder_gives_remainder(self) -> None:
-        hoi_parser = word('h')
+        hoi_parser = word('hoi')
         parse_result = hoi_parser('hoi hoi')
         self.assertListEqual(parse_result, [('hoi', ' hoi')])
