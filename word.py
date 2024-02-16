@@ -7,7 +7,7 @@ def word(word_to_parse_for: str) -> Parser[str]:
     def parser(to_parse: str) -> list[tuple[str, str]]:
         pass
 
-    return parser
+    return Parser(parser)
 
 
 class TestWord(unittest.TestCase):

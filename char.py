@@ -4,7 +4,10 @@ from parser import Parser
 
 
 def char(c: str) -> Parser[str]:
-    pass
+    def parser(to_parse: str) -> list[tuple[str, str]]:
+        pass
+
+    return Parser(parser)
 
 
 class TestChar(unittest.TestCase):
