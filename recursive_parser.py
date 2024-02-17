@@ -3,7 +3,7 @@ import unittest
 from dataclasses import dataclass
 from typing import Generic
 
-from asserts import assert_parsing_succeeds
+from asserts import assert_parsing_succeeds, assert_parsing_fails
 from char import char
 from digit import digit
 from parser import Parser, T, ParseResults
@@ -50,6 +50,12 @@ class TestRecursiveParsing(unittest.TestCase):
 
     def test_we_can_do_parens(self) -> None:
         assert_parsing_succeeds(self, recursive_lang, '(3)').with_result(Bracketed(3))
+
+    def test_we_can_do_two_parens(self) -> None:
+        assert_parsing_succeeds(self, recursive_lang, '((3))').with_result(Bracketed(Bracketed(3)))
+
+    def test_parens_must_close(self) -> None:
+        assert_parsing_fails(self, recursive_lang, '((3)')
 
     def test_we_can_do_many(self) -> None:
         assert_parsing_succeeds(self, recursive_lang, '((((3))))')

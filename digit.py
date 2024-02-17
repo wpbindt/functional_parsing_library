@@ -1,10 +1,11 @@
+import string
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from char_in import char_in
 
 
-digit = int * char_in('0123456789')
+digit = int * char_in(string.digits)
 
 
 class TestDigit(unittest.TestCase):

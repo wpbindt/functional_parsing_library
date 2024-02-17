@@ -6,7 +6,7 @@ from parser import Parser, ParseResults
 
 def char(c: str) -> Parser[str]:
     def parser(to_parse: str) -> ParseResults[str]:
-        if to_parse[0] != c:
+        if len(to_parse) == 0 or to_parse[0] != c:
             return []
         return [(c, to_parse[1:])]
 
@@ -14,6 +14,9 @@ def char(c: str) -> Parser[str]:
 
 
 class TestChar(unittest.TestCase):
+    def test_that_empty_strings_do_not_parse(self) -> None:
+        assert_parsing_fails(self, char('h'), '')
+
     def test_that_parsing_a_different_character_fails(self) -> None:
         h_parser = char('h')
         assert_parsing_fails(self, h_parser, 'n')
