@@ -2,16 +2,18 @@ import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from char import char
-from parser import Parser, S, T, ParseResults
+from parser import Parser, S, T, ParseResults, CouldNotParse
 
 
 def and_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[tuple[T, S]]:
-    def parser(to_parse: str) -> ParseResults[tuple[T, S]]:
-        return [
-            ((result_1, result_2), remainder_2)
-            for result_1, remainder_1 in parser_1(to_parse)
-            for result_2, remainder_2 in parser_2(remainder_1)
-        ]
+    def parser(to_parse: str) -> ParseResults[tuple[T, S]] | CouldNotParse:
+        result_1 = parser_1(to_parse)
+        if isinstance(result_1, CouldNotParse):
+            return result_1
+        result_2 = parser_2(result_1.remainder)
+        if isinstance(result_2, CouldNotParse):
+            return result_2
+        return ParseResults((result_1.result, result_2.result), result_2.remainder)
 
     return Parser(parser)
 

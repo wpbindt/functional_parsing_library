@@ -1,14 +1,14 @@
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parser import Parser, ParseResults
+from parser import Parser, ParseResults, CouldNotParse
 
 
 def word(word_to_parse_for: str) -> Parser[str]:
-    def parser(to_parse: str) -> ParseResults[str]:
+    def parser(to_parse: str) -> ParseResults[str] | CouldNotParse:
         if not to_parse.startswith(word_to_parse_for):
-            return []
-        return [(word_to_parse_for, to_parse[len(word_to_parse_for):])]
+            return CouldNotParse()
+        return ParseResults(word_to_parse_for, to_parse[len(word_to_parse_for):])
 
     return Parser(parser)
 

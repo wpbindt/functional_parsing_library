@@ -6,7 +6,7 @@ from typing import Generic
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from char import char
 from digit import digit
-from parser import Parser, T, ParseResults
+from parser import Parser, T, ParseResults, CouldNotParse
 
 
 @dataclass(frozen=True)
@@ -29,7 +29,7 @@ class RecursiveParser(Generic[T]):
     def parser(self, parser: Parser[T]) -> None:
         self._parser = parser
 
-    def _parse_function(self, to_parse: str) -> ParseResults[T]:
+    def _parse_function(self, to_parse: str) -> ParseResults[T] | CouldNotParse:
         if self._parser is None:
             raise NotImplementedError
         return self._parser(to_parse)

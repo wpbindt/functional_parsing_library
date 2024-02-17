@@ -3,15 +3,18 @@ from typing import Callable
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from char import char
-from parser import Parser, T, S, ParseResults
+from parser import Parser, T, S, ParseResults, CouldNotParse
 
 
 def fmap(function: Callable[[T], S], parser: Parser[T]) -> Parser[S]:
-    def parser_(to_parse: str) -> ParseResults[S]:
-        return [
-            (function(result), remainder)
-            for result, remainder in parser(to_parse)
-        ]
+    def parser_(to_parse: str) -> ParseResults[S] | CouldNotParse:
+        result = parser(to_parse)
+        if isinstance(result, CouldNotParse):
+            return result
+        return ParseResults(
+            result=function(result.result),
+            remainder=result.remainder
+        )
 
     return Parser(parser_)
 
