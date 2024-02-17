@@ -6,7 +6,7 @@ from parser import Parser, T
 
 
 def many(parser: Parser[T]) -> Parser[list[T]]:
-    return (lambda x: [x]) * parser
+    pass
 
 
 class TestMany(unittest.TestCase):
