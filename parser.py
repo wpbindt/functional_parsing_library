@@ -6,6 +6,11 @@ T = TypeVar('T', covariant=True)
 S = TypeVar('S')
 
 
+class ParseResults(Protocol[T]):
+    def __iter__(self) -> Iterable[tuple[T, str]]:
+        pass
+
+
 class ParserFunction(Protocol[T]):
     def __call__(self, to_parse: str) -> Iterable[tuple[T, str]]:
         pass
