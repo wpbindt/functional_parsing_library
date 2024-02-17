@@ -1,12 +1,13 @@
 from __future__ import annotations
-from typing import TypeVar, Protocol, Generic, Callable
 
-T = TypeVar('T')
+from typing import TypeVar, Protocol, Generic, Callable, Iterable
+
+T = TypeVar('T', covariant=True)
 S = TypeVar('S')
 
 
 class ParserFunction(Protocol[T]):
-    def __call__(self, to_parse: str) -> list[tuple[T, str]]:
+    def __call__(self, to_parse: str) -> Iterable[tuple[T, str]]:
         pass
 
 
@@ -14,7 +15,7 @@ class Parser(Generic[T]):
     def __init__(self, parser_function: ParserFunction[T]) -> None:
         self._parser_function = parser_function
 
-    def __call__(self, to_parse: str) -> list[tuple[T, str]]:
+    def __call__(self, to_parse: str) -> Iterable[tuple[T, str]]:
         return self._parser_function(to_parse)
 
     def __or__(self, other: Parser[S]) -> Parser[T | S]:

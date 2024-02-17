@@ -6,7 +6,20 @@ from parser import Parser, T
 
 
 def many(parser: Parser[T]) -> Parser[list[T]]:
-    pass
+    def parser_(to_parse: str) -> list[tuple[list[T], str]]:
+        result = parser(to_parse)
+        if len(list(result)) == 0:
+            return []
+        parsed, remainder = next(iter(result))
+        results = [parsed]
+        while remainder:
+            result = parser(remainder)
+            if len(list(result)) == 0:
+                break
+            parsed, remainder = next(iter(result))
+            results.append(parsed)
+        return [(results, remainder)]
+    return Parser(parser_)
 
 
 class TestMany(unittest.TestCase):
