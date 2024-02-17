@@ -1,11 +1,11 @@
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parser import Parser
+from parser import Parser, ParseResults
 
 
 def char(c: str) -> Parser[str]:
-    def parser(to_parse: str) -> list[tuple[str, str]]:
+    def parser(to_parse: str) -> ParseResults[str]:
         if to_parse[0] != c:
             return []
         return [(c, to_parse[1:])]

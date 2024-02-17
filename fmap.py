@@ -3,11 +3,11 @@ from typing import Callable
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from char import char
-from parser import Parser, T, S
+from parser import Parser, T, S, ParseResults
 
 
 def fmap(function: Callable[[T], S], parser: Parser[T]) -> Parser[S]:
-    def parser_(to_parse: str) -> list[tuple[S, str]]:
+    def parser_(to_parse: str) -> ParseResults[S]:
         return [
             (function(result), remainder)
             for result, remainder in parser(to_parse)

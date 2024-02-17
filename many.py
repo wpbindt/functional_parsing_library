@@ -2,11 +2,11 @@ import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from char import char
-from parser import Parser, T
+from parser import Parser, T, ParseResults
 
 
 def many(parser: Parser[T]) -> Parser[list[T]]:
-    def parser_(to_parse: str) -> list[tuple[list[T], str]]:
+    def parser_(to_parse: str) -> ParseResults[list[T]]:
         result = parser(to_parse)
         if len(list(result)) == 0:
             return []

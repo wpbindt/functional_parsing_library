@@ -1,13 +1,12 @@
 import unittest
-from typing import Iterable
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from char import char
-from parser import Parser, T, S
+from parser import Parser, T, S, ParseResults
 
 
 def or_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[T | S]:
-    def parser(to_parse: str) -> Iterable[tuple[T | S, str]]:
+    def parser(to_parse: str) -> ParseResults[T | S]:
         try_1 = parser_1(to_parse)
         if len(list(try_1)) > 0:
             return try_1
