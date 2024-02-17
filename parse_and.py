@@ -1,5 +1,6 @@
 import unittest
 
+from asserts import assert_parsing_fails, assert_parsing_succeeds
 from char import char
 from parser import Parser, S, T
 
@@ -19,22 +20,14 @@ class TestParseAnd(unittest.TestCase):
     def test_fail_upon_nonsense(self) -> None:
         parser = char('a') & char('b')
 
-        self.assertListEqual(parser('dingeling'), [])
+        assert_parsing_fails(self, parser, 'dingeling')
 
     def test_fail_not_both_parsers_are_matched(self) -> None:
         parser = char('a') & char('b')
 
-        self.assertListEqual(parser('adingeling'), [])
+        assert_parsing_fails(self, parser, 'adingeling')
 
     def test_succeed_upon_successful_match(self) -> None:
         parser = char('a') & char('b')
 
-        self.assertListEqual(
-            parser('abingeling'),
-            [
-                (
-                    ('a', 'b'),
-                    'ingeling'
-                )
-            ]
-        )
+        assert_parsing_succeeds(self, parser, 'abingeling').with_result(('a', 'b')).with_remainder('ingeling')

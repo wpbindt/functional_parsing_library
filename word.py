@@ -1,5 +1,6 @@
 import unittest
 
+from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parser import Parser
 
 
@@ -15,15 +16,12 @@ def word(word_to_parse_for: str) -> Parser[str]:
 class TestWord(unittest.TestCase):
     def test_that_parsing_a_different_character_fails(self) -> None:
         hoi_parser = word('hoi')
-        parse_result = hoi_parser('subaru')
-        self.assertListEqual(parse_result, [])
+        assert_parsing_fails(self, hoi_parser, 'subaru')
 
     def test_that_parsing_h_succeeds(self) -> None:
         hoi_parser = word('hoi')
-        parse_result = hoi_parser('hoi')
-        self.assertListEqual(parse_result, [('hoi', '')])
+        assert_parsing_succeeds(self, hoi_parser, 'hoi').with_result('hoi').with_remainder('')
 
     def test_that_parsing_h_with_remainder_gives_remainder(self) -> None:
         hoi_parser = word('hoi')
-        parse_result = hoi_parser('hoi hoi')
-        self.assertListEqual(parse_result, [('hoi', ' hoi')])
+        assert_parsing_succeeds(self, hoi_parser, 'hoi hoi').with_remainder(' hoi')

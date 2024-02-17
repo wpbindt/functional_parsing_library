@@ -1,5 +1,6 @@
 import unittest
 
+from asserts import assert_parsing_fails, assert_parsing_succeeds
 from char import char
 from parser import Parser, T, S
 
@@ -23,25 +24,25 @@ class TestOr(unittest.TestCase):
         a = char('a')
         b = char('b')
         parser = a | b
-        self.assertListEqual(parser('c'), [])
+        assert_parsing_fails(self, parser, 'c')
 
     def test_parsing_first_succeeds(self) -> None:
         a = char('a')
         b = char('b')
         parser = a | b
-        self.assertListEqual(parser('a'), [('a', '')])
+        assert_parsing_succeeds(self, parser, 'a').with_result('a')
 
     def test_parsing_second_succeeds(self) -> None:
         a = char('a')
         b = char('b')
         parser = a | b
-        self.assertListEqual(parser('b'), [('b', '')])
+        assert_parsing_succeeds(self, parser, 'b').with_result('b')
 
     def test_that_remainder_remains(self) -> None:
         a = char('a')
         b = char('b')
         parser = a | b
-        self.assertListEqual(parser('bingo'), [('b', 'ingo')])
+        assert_parsing_succeeds(self, parser, 'bingo').with_remainder('ingo')
 
     def test_or_(self) -> None:
         self.fail('Write tests for or_')

@@ -24,4 +24,4 @@ class TestChar(unittest.TestCase):
 
     def test_that_parsing_h_with_remainder_gives_remainder(self) -> None:
         h_parser = char('h')
-        assert_parsing_succeeds(self, h_parser, 'h').with_remainder('oi')
+        assert_parsing_succeeds(self, h_parser, 'hoi').with_remainder('oi')
