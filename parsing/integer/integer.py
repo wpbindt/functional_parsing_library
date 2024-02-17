@@ -2,10 +2,10 @@ import string
 import unittest
 
 from asserts import assert_parsing_succeeds
-from char import char
-from char_in import char_in
+from parsing.strings.char import char
+from parsing.strings.char_in import char_in
 from hacky_function_composition import o
-from many import many
+from parsing.combinators.many import many
 
 
 digit = char_in(string.digits)

@@ -2,7 +2,7 @@ import string
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from char_in import char_in
+from parsing.strings.char_in import char_in
 
 
 digit = int * char_in(string.digits)

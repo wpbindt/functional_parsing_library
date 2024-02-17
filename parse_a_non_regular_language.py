@@ -2,8 +2,8 @@ import unittest
 from typing import Any
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
-from char import char
-from recursive_parser import RecursiveParser
+from parsing.strings.char import char
+from parsing.recursive_parser import RecursiveParser
 
 a = char('a')
 b = char('b')

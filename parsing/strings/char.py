@@ -1,7 +1,7 @@
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parser import Parser, ParseResults, CouldNotParse
+from parsing.parser import Parser, ParseResults, CouldNotParse
 
 
 def char(c: str) -> Parser[str]:

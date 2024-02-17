@@ -2,8 +2,8 @@ import unittest
 from typing import Callable
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
-from char import char
-from parser import Parser, T, S, ParseResults, CouldNotParse
+from parsing.strings.char import char
+from parsing.parser import Parser, T, S, ParseResults, CouldNotParse
 
 
 def fmap(function: Callable[[T], S], parser: Parser[T]) -> Parser[S]:

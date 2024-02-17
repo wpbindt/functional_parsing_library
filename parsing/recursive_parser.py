@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from typing import Generic
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
-from char import char
-from digit import digit
-from parser import Parser, T, ParseResults, CouldNotParse
+from parsing.strings.char import char
+from parsing.strings.digit import digit
+from parsing.parser import Parser, T, ParseResults, CouldNotParse
 
 
 @dataclass(frozen=True)

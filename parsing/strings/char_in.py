@@ -1,4 +1,4 @@
-from parser import Parser, ParseResults, CouldNotParse
+from parsing.parser import Parser, ParseResults, CouldNotParse
 
 
 def char_in(string: str) -> Parser[str]:

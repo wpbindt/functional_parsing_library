@@ -1,8 +1,8 @@
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from char import char
-from parser import Parser, T, S, ParseResults, CouldNotParse
+from parsing.strings.char import char
+from parsing.parser import Parser, T, S, ParseResults, CouldNotParse
 
 
 def or_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[T | S]:

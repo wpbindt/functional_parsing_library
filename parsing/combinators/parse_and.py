@@ -1,8 +1,8 @@
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from char import char
-from parser import Parser, S, T, ParseResults, CouldNotParse
+from parsing.strings.char import char
+from parsing.parser import Parser, S, T, ParseResults, CouldNotParse
 
 
 def and_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[tuple[T, S]]:

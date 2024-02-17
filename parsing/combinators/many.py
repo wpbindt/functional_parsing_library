@@ -1,8 +1,8 @@
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from char import char
-from parser import Parser, T, ParseResults, CouldNotParse
+from parsing.strings.char import char
+from parsing.parser import Parser, T, ParseResults, CouldNotParse
 
 
 def some(parser: Parser[T]) -> Parser[list[T]]:
