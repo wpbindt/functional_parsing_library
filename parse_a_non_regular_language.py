@@ -26,3 +26,7 @@ class TestParseNonRegularLanguage(unittest.TestCase):
 
     def test_parser_fails_on_stuff_too_2(self) -> None:
         assert_parsing_fails(self, non_regular_parser, 'aa')
+
+    def test_many_cases(self) -> None:
+        for n in range(1, 20):
+            assert_parsing_succeeds(self, non_regular_parser, n * 'a' + n * 'b')
