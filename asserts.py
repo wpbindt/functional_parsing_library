@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 from typing import Any, Generic
 from unittest import TestCase
 
-from parser import Parser, T, S, CouldNotParse, ParseResults
+from parser import Parser, S, CouldNotParse, ParseResults
 
 
 class ParsingTestResult(Generic[S]):
