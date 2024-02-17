@@ -1,4 +1,5 @@
 import unittest
+from typing import Any
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from char import char
@@ -6,7 +7,7 @@ from recursive_parser import RecursiveParser
 
 a = char('a')
 b = char('b')
-wedged_term = RecursiveParser()
+wedged_term: RecursiveParser[Any] = RecursiveParser()
 non_regular_parser = (a & b) | wedged_term.parser
 wedged_term.parser = a & non_regular_parser & b
 
