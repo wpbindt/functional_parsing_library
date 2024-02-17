@@ -35,12 +35,10 @@ class Parser(Generic[T]):
         from fmap import fmap
         return fmap(function=other, parser=self)
 
+    def __gt__(self, other: Parser[S]) -> Parser[S]:
+        from ignore_left import ignore_left
+        return ignore_left(left=self, right=other)
 
-class CouldNotParse(Exception):
-    pass
-
-
-def parse(parser: Parser[T], to_parse: str) -> T:
-    for parsed, remainder in parser(to_parse):
-        return parsed
-    raise CouldNotParse
+    def __lt__(self, other: Parser[S]) -> Parser[T]:
+        from ignore_right import ignore_right
+        return ignore_right(left=self, right=other)

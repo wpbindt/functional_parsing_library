@@ -15,10 +15,6 @@ def or_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[T | S]:
     return Parser(parser)
 
 
-def or_(*parsers: Parser[T]) -> Parser[T]:
-    raise NotImplementedError
-
-
 class TestOr(unittest.TestCase):
     def test_parsing_neither_fails(self) -> None:
         a = char('a')
@@ -43,6 +39,3 @@ class TestOr(unittest.TestCase):
         b = char('b')
         parser = a | b
         assert_parsing_succeeds(self, parser, 'bingo').with_remainder('ingo')
-
-    def test_or_(self) -> None:
-        self.fail('Write tests for or_')

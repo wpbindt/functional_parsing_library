@@ -1,0 +1,55 @@
+from __future__ import annotations
+import unittest
+from dataclasses import dataclass
+from typing import Generic
+
+from asserts import assert_parsing_succeeds
+from char import char
+from digit import digit
+from parser import Parser, T, ParseResults
+
+
+@dataclass(frozen=True)
+class Bracketed:
+    content: Bracketed | int
+
+
+ParsedRecursiveLang = int | Bracketed
+
+
+class RecursiveParser(Generic[T]):
+    def __init__(self) -> None:
+        self._parser: Parser[T] | None = None
+
+    @property
+    def parser(self) -> Parser[T]:
+        return Parser(self._parse_function)
+
+    @parser.setter
+    def parser(self, parser: Parser[T]) -> None:
+        self._parser = parser
+
+    def _parse_function(self, to_parse: str) -> ParseResults[T]:
+        if self._parser is None:
+            raise NotImplementedError
+        return self._parser(to_parse)
+
+
+open = char('(')
+close = char(')')
+
+bracketed: RecursiveParser[Bracketed] = RecursiveParser()
+
+recursive_lang = digit | bracketed.parser
+bracketed.parser = Bracketed * ((open > recursive_lang) < close)
+
+
+class TestRecursiveParsing(unittest.TestCase):
+    def test_digit_is_parsed(self) -> None:
+        assert_parsing_succeeds(self, recursive_lang, '3').with_result(3)
+
+    def test_we_can_do_parens(self) -> None:
+        assert_parsing_succeeds(self, recursive_lang, '(3)').with_result(Bracketed(3))
+
+    def test_we_can_do_many(self) -> None:
+        assert_parsing_succeeds(self, recursive_lang, '((((3))))')
