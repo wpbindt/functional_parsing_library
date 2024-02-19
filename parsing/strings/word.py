@@ -1,14 +1,15 @@
 import unittest
 
-from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.parser import Parser, ParseResults, CouldNotParse
 
 
 def word(word_to_parse_for: str) -> Parser[str]:
+    """
+    Matches strings starting with word_to_parse_for, and returns word_to_parse_for as the result
+    For example, word('rinky') should parse 'rinky dinky' with result 'rinky', and remainder ' dinky'
+    """
     def parser(to_parse: str) -> ParseResults[str] | CouldNotParse:
-        if not to_parse.startswith(word_to_parse_for):
-            return CouldNotParse()
-        return ParseResults(word_to_parse_for, to_parse[len(word_to_parse_for):])
+        return CouldNotParse()
 
     return Parser(parser)
 
@@ -16,12 +17,13 @@ def word(word_to_parse_for: str) -> Parser[str]:
 class TestWord(unittest.TestCase):
     def test_that_parsing_a_different_character_fails(self) -> None:
         hoi_parser = word('hoi')
-        assert_parsing_fails(self, hoi_parser, 'subaru')
+        self.assertEqual(hoi_parser('subaru'), CouldNotParse())
 
-    def test_that_parsing_h_succeeds(self) -> None:
+    def test_that_parsing_hoi_succeeds(self) -> None:
         hoi_parser = word('hoi')
-        assert_parsing_succeeds(self, hoi_parser, 'hoi').with_result('hoi').with_remainder('')
+        self.assertEqual(hoi_parser('hoi'), ParseResults(result='hoi', remainder=''))
 
     def test_that_parsing_h_with_remainder_gives_remainder(self) -> None:
         hoi_parser = word('hoi')
-        assert_parsing_succeeds(self, hoi_parser, 'hoi hoi').with_remainder(' hoi')
+        result = hoi_parser('hoi hoi')
+        self.assertEqual(result, ParseResults(result='hoi', remainder=' hoi'))

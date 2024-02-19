@@ -7,7 +7,12 @@ from parsing.strings.word import word
 
 
 def ignore_left(left: Parser[T], right: Parser[S]) -> Parser[S]:
-    return (lambda t: t[1]) * (left & right)
+    """
+    It helps to implement fmap and and_2 first
+    Parses left and right consecutively, and returns the results of the right parser
+    The parser class implements the greater than method with this function, so left > right
+    is the same as ignore_left(left, right)
+    """
 
 
 class TestIgnoreLeft(unittest.TestCase):

@@ -2,21 +2,25 @@ import unittest
 from typing import Any
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.combinators.many import some
 from parsing.parser import Parser, T
 from parsing.strings.char import char
 from parsing.strings.word import word
 
 
 def separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:
-    return (lambda result: [result[0], *result[1]]) * (parser & some(separator > parser))
-
-
-nothing = word('')
+    """
+    It helps to implement fmap, some, and_2, and ignore_left first
+    Parses a sequence of one or more matches for parser, separated by matches for separator
+    returns a list of the results
+    """
 
 
 def some_separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:
-    return separated_by(parser, separator) | ((lambda x: []) * nothing)
+    """
+    It helps to implement or_2, separated_by, word, and fmap first
+    Parses a sequence of zero or more matches for parser, separated by matches for separator
+    returns a list of the results
+    """
 
 
 class TestSeparatedBy(unittest.TestCase):

@@ -2,10 +2,14 @@ import string
 import unittest
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.strings.char_in import char_in
+from parsing.parser import Parser
 
 
-digit = int * char_in(string.digits)
+digit: Parser[int] = ...
+"""
+This parser should match single digits, and return the corresponding integer. Try defining it in
+terms of parsers you've already implemented, by using fmap.
+"""
 
 
 class TestDigit(unittest.TestCase):

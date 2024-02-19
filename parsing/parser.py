@@ -24,6 +24,14 @@ class ParserFunction(Protocol[T]):
 
 
 class Parser(Generic[T]):
+    """
+    Class that parser functions should be wrapped in. Enables syntactic sugar
+    for combinators. For example, you can write
+        capitalize_name * ((first_name & last_name) | mononym) < period)
+    instead of
+        fmap(capitalize_name, ignore_right(or_2(and_2(name, surname), mononym), period))
+    for a parser parsing "Frank Costanza." to "FRANK COSTANZA" and "Wilson." to "WILSON"
+    """
     def __init__(self, parser_function: ParserFunction[T]) -> None:
         self._parser_function = parser_function
 
@@ -39,7 +47,7 @@ class Parser(Generic[T]):
         return and_2(parser_1=self, parser_2=other)
 
     def __rmul__(self, other: Callable[[T], S]) -> Parser[S]:
-        from parsing.fmap import fmap
+        from parsing.combinators.fmap import fmap
         return fmap(function=other, parser=self)
 
     def __gt__(self, other: Parser[S]) -> Parser[S]:
