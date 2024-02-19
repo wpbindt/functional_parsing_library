@@ -1,4 +1,5 @@
 import unittest
+from typing import Any
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.strings.char import char
@@ -18,6 +19,12 @@ def and_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[tuple[T, S]]:
     return Parser(parser)
 
 
+def and_(*parser: Parser[Any]) -> Parser[tuple[Any, ...]]:
+    if len(parser) == 1:
+        return (lambda x: (x,)) * parser[0]
+    return (lambda x: (x[0], *x[1])) * (parser[0] & and_(*parser[1:]))
+
+
 class TestParseAnd(unittest.TestCase):
     def test_fail_upon_nonsense(self) -> None:
         parser = char('a') & char('b')
@@ -33,3 +40,13 @@ class TestParseAnd(unittest.TestCase):
         parser = char('a') & char('b')
 
         assert_parsing_succeeds(self, parser, 'abingeling').with_result(('a', 'b')).with_remainder('ingeling')
+
+    def test_ampersand_is_ugly_beyond_two(self) -> None:
+        parser = char('a') & char('b') & char('c')
+
+        assert_parsing_succeeds(self, parser, 'abc').with_result((('a', 'b'), 'c'))
+
+    def test_and_many_works_better_than_that(self) -> None:
+        parser = and_(char('a'), char('b'), char('c'))
+
+        assert_parsing_succeeds(self, parser, 'abcdefg').with_result(('a', 'b', 'c')).with_remainder('defg')
