@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import unittest
 from dataclasses import dataclass
 from enum import Enum
 
@@ -40,8 +39,6 @@ cases = [
 ]
 
 
-class TestPersonParsing(unittest.TestCase):
-    def test_everything(self) -> None:
-        for to_parse, parsed in cases:
-            with self.subTest(to_parse):
-                assert_parsing_succeeds(self, person, to_parse).with_result(parsed).with_remainder('')
+def test_everything() -> None:
+    for to_parse, parsed in cases:
+        assert_parsing_succeeds(person, to_parse).with_result(parsed).with_remainder('')

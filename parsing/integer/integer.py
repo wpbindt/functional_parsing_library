@@ -1,5 +1,4 @@
 import string
-import unittest
 
 from asserts import assert_parsing_succeeds
 from parsing.strings.char import char
@@ -15,12 +14,13 @@ negative_integer = negate * (char('-') > nonnegative_integer)
 integer = nonnegative_integer | negative_integer
 
 
-class TestInteger(unittest.TestCase):
-    def test_that_we_can_parse_single_digits(self) -> None:
-        assert_parsing_succeeds(self, integer, '3').with_result(3)
+def test_that_we_can_parse_single_digits() -> None:
+    assert_parsing_succeeds(integer, '3').with_result(3)
 
-    def test_that_we_can_parse_more_digits(self) -> None:
-        assert_parsing_succeeds(self, integer, '33').with_result(33)
 
-    def test_that_we_can_parse_negative_integers(self) -> None:
-        assert_parsing_succeeds(self, integer, '-3').with_result(-3)
+def test_that_we_can_parse_more_digits() -> None:
+    assert_parsing_succeeds(integer, '33').with_result(33)
+
+
+def test_that_we_can_parse_negative_integers() -> None:
+    assert_parsing_succeeds(integer, '-3').with_result(-3)

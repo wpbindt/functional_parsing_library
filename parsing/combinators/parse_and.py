@@ -1,4 +1,3 @@
-import unittest
 from typing import Any
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
@@ -25,28 +24,31 @@ def and_(*parser: Parser[Any]) -> Parser[tuple[Any, ...]]:
     return (lambda x: (x[0], *x[1])) * (parser[0] & and_(*parser[1:]))
 
 
-class TestParseAnd(unittest.TestCase):
-    def test_fail_upon_nonsense(self) -> None:
-        parser = char('a') & char('b')
+def test_fail_upon_nonsense() -> None:
+    parser = char('a') & char('b')
 
-        assert_parsing_fails(self, parser, 'dingeling')
+    assert_parsing_fails(parser, 'dingeling')
 
-    def test_fail_not_both_parsers_are_matched(self) -> None:
-        parser = char('a') & char('b')
 
-        assert_parsing_fails(self, parser, 'adingeling')
+def test_fail_not_both_parsers_are_matched() -> None:
+    parser = char('a') & char('b')
 
-    def test_succeed_upon_successful_match(self) -> None:
-        parser = char('a') & char('b')
+    assert_parsing_fails(parser, 'adingeling')
 
-        assert_parsing_succeeds(self, parser, 'abingeling').with_result(('a', 'b')).with_remainder('ingeling')
 
-    def test_ampersand_is_ugly_beyond_two(self) -> None:
-        parser = char('a') & char('b') & char('c')
+def test_succeed_upon_successful_match() -> None:
+    parser = char('a') & char('b')
 
-        assert_parsing_succeeds(self, parser, 'abc').with_result((('a', 'b'), 'c'))
+    assert_parsing_succeeds(parser, 'abingeling').with_result(('a', 'b')).with_remainder('ingeling')
 
-    def test_and_many_works_better_than_that(self) -> None:
-        parser = and_(char('a'), char('b'), char('c'))
 
-        assert_parsing_succeeds(self, parser, 'abcdefg').with_result(('a', 'b', 'c')).with_remainder('defg')
+def test_ampersand_is_ugly_beyond_two() -> None:
+    parser = char('a') & char('b') & char('c')
+
+    assert_parsing_succeeds(parser, 'abc').with_result((('a', 'b'), 'c'))
+
+
+def test_and_many_works_better_than_that() -> None:
+    parser = and_(char('a'), char('b'), char('c'))
+
+    assert_parsing_succeeds(parser, 'abcdefg').with_result(('a', 'b', 'c')).with_remainder('defg')

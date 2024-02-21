@@ -1,5 +1,4 @@
 from __future__ import annotations
-import unittest
 from dataclasses import dataclass
 from typing import Generic
 
@@ -44,18 +43,21 @@ recursive_lang = digit | bracketed.parser
 bracketed.parser = Bracketed * ((open > recursive_lang) < close)
 
 
-class TestRecursiveParsing(unittest.TestCase):
-    def test_digit_is_parsed(self) -> None:
-        assert_parsing_succeeds(self, recursive_lang, '3').with_result(3)
+def test_digit_is_parsed() -> None:
+    assert_parsing_succeeds(recursive_lang, '3').with_result(3)
 
-    def test_we_can_do_parens(self) -> None:
-        assert_parsing_succeeds(self, recursive_lang, '(3)').with_result(Bracketed(3))
 
-    def test_we_can_do_two_parens(self) -> None:
-        assert_parsing_succeeds(self, recursive_lang, '((3))').with_result(Bracketed(Bracketed(3)))
+def test_we_can_do_parens() -> None:
+    assert_parsing_succeeds(recursive_lang, '(3)').with_result(Bracketed(3))
 
-    def test_parens_must_close(self) -> None:
-        assert_parsing_fails(self, recursive_lang, '((3)')
 
-    def test_we_can_do_many(self) -> None:
-        assert_parsing_succeeds(self, recursive_lang, '((((3))))')
+def test_we_can_do_two_parens() -> None:
+    assert_parsing_succeeds(recursive_lang, '((3))').with_result(Bracketed(Bracketed(3)))
+
+
+def test_parens_must_close() -> None:
+    assert_parsing_fails(recursive_lang, '((3)')
+
+
+def test_we_can_do_many() -> None:
+    assert_parsing_succeeds(recursive_lang, '((((3))))')

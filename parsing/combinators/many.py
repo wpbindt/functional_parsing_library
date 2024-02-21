@@ -1,8 +1,6 @@
-import unittest
-
 from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.strings.char import char
 from parsing.parser import Parser, T, ParseResults, CouldNotParse
+from parsing.strings.char import char
 
 
 def some(parser: Parser[T]) -> Parser[list[T]]:
@@ -25,33 +23,37 @@ def many(parser: Parser[T]) -> Parser[list[T]]:
     return (lambda t: [t[0], *t[1]]) * (parser & some(parser))
 
 
-class TestMany(unittest.TestCase):
-    def test_some_parses_one(self) -> None:
-        parser = some(char('a'))
+def test_some_parses_one() -> None:
+    parser = some(char('a'))
 
-        assert_parsing_succeeds(self, parser, 'a').with_result(['a'])
+    assert_parsing_succeeds(parser, 'a').with_result(['a'])
 
-    def test_some_parses_more(self) -> None:
-        parser = some(char('a'))
 
-        assert_parsing_succeeds(self, parser, 'aa').with_result(['a', 'a'])
+def test_some_parses_more() -> None:
+    parser = some(char('a'))
 
-    def test_some_parses_none(self) -> None:
-        parser = some(char('a'))
+    assert_parsing_succeeds(parser, 'aa').with_result(['a', 'a'])
 
-        assert_parsing_succeeds(self, parser, 'h').with_result([]).with_remainder('h')
 
-    def test_many_fails_to_parse_unparsable(self) -> None:
-        parser = many(char('a'))
+def test_some_parses_none() -> None:
+    parser = some(char('a'))
 
-        assert_parsing_fails(self, parser, 'b')
+    assert_parsing_succeeds(parser, 'h').with_result([]).with_remainder('h')
 
-    def test_many_parses_one(self) -> None:
-        parser = many(char('a'))
 
-        assert_parsing_succeeds(self, parser, 'a').with_result(['a'])
+def test_many_fails_to_parse_unparsable() -> None:
+    parser = many(char('a'))
 
-    def test_many_parses_two(self) -> None:
-        parser = many(char('a'))
+    assert_parsing_fails(parser, 'b')
 
-        assert_parsing_succeeds(self, parser, 'aa').with_result(['a', 'a'])
+
+def test_many_parses_one() -> None:
+    parser = many(char('a'))
+
+    assert_parsing_succeeds(parser, 'a').with_result(['a'])
+
+
+def test_many_parses_two() -> None:
+    parser = many(char('a'))
+
+    assert_parsing_succeeds(parser, 'aa').with_result(['a', 'a'])
