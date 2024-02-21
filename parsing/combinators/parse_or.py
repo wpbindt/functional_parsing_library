@@ -6,12 +6,11 @@ from parsing.parser import Parser, T, S, ParseResults, CouldNotParse
 
 
 def or_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[T | S]:
-    """
-    or_2(p1, p2) parses either what p1 parses or what p2 parses, in that order
-    equivalent to p1 | p2 because of how Parser.__or__ is implemented
-    """
     def parser(to_parse: str) -> ParseResults[T | S] | CouldNotParse:
-        pass
+        try_1 = parser_1(to_parse)
+        if not isinstance(try_1, CouldNotParse):
+            return try_1
+        return parser_2(to_parse)
 
     return Parser(parser)
 

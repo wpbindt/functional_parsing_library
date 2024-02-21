@@ -2,31 +2,26 @@ import string
 import unittest
 
 from asserts import assert_parsing_succeeds
+from parsing.combinators.many import many
 from parsing.combinators.separated_by import some_separated_by
-from parsing.examples.integer import integer
-from parsing.parser import Parser
+from parsing.integer.integer import integer
 from parsing.recursive_parser import RecursiveParser
 from parsing.strings.char import char
+from parsing.strings.char_in import char_in
 from parsing.strings.word import word
 
-valid_json_string_chars = string.ascii_letters + 'I don\'t actually know what JSON allows'
-json_string: Parser[str] = ...
+
+valid_json_string_chars = string.ascii_letters + 'idk'
+json_string = ''.join * ((char('"') > many(char_in(valid_json_string_chars))) < char('"'))
 
 _json = RecursiveParser()
 array = (char('[') > some_separated_by(_json.parser, word(', '))) < char(']')
-_json.parser = integer | array
+key_value_pair = (json_string < word(': ')) & _json.parser
+json_object = dict * (
+    (char('{') > some_separated_by(key_value_pair, word(', '))) < char('}')
+)
+_json.parser = integer | array | json_string | json_object
 json = _json.parser
-"""
-This one is a bit difficult, since it's a parser for a recursive language. 
-
-Since the specification of json is self-referential, we have to do some ugly
-things involving the RecursiveParser class to avoid NameErrors (you cannot 
-write something like JSON = integer | ((char('[') > JSON) < char(']')), that's 
-super illegal)
-
-Try extending the json parser to be able to parse json strings, and then
-json objects
-"""
 
 
 class TestJSONParsing(unittest.TestCase):

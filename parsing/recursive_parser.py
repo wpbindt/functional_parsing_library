@@ -5,7 +5,7 @@ from typing import Generic
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from parsing.strings.char import char
-from parsing.examples.digit import digit
+from parsing.strings.digit import digit
 from parsing.parser import Parser, T, ParseResults, CouldNotParse
 
 

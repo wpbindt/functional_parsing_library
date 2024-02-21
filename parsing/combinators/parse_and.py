@@ -7,21 +7,22 @@ from parsing.parser import Parser, S, T, ParseResults, CouldNotParse
 
 
 def and_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[tuple[T, S]]:
-    """
-    and_2(p1, p2) parses p1 and p2 consecutively and returns a tuple with the results
-    The Parser.__and__ is defined as this function, so and_2(p1, p2) is the same as p1 & p2
-    """
     def parser(to_parse: str) -> ParseResults[tuple[T, S]] | CouldNotParse:
-        pass
+        result_1 = parser_1(to_parse)
+        if isinstance(result_1, CouldNotParse):
+            return result_1
+        result_2 = parser_2(result_1.remainder)
+        if isinstance(result_2, CouldNotParse):
+            return result_2
+        return ParseResults((result_1.result, result_2.result), result_2.remainder)
 
     return Parser(parser)
 
 
 def and_(*parser: Parser[Any]) -> Parser[tuple[Any, ...]]:
-    """
-    and_(p1, p2, p3) parses p1, p2, p3 consecutively and returns a tuple with the results
-    You don't have to, but it helps to implement fmap and and_2 first
-    """
+    if len(parser) == 1:
+        return (lambda x: (x,)) * parser[0]
+    return (lambda x: (x[0], *x[1])) * (parser[0] & and_(*parser[1:]))
 
 
 class TestParseAnd(unittest.TestCase):

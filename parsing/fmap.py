@@ -7,19 +7,14 @@ from parsing.parser import Parser, T, S, ParseResults, CouldNotParse
 
 
 def fmap(function: Callable[[T], S], parser: Parser[T]) -> Parser[S]:
-    """
-    fmap takes a function f from T to S, and a parser which results in Ts,
-    and returns a parser which parses the exact same strings, but uses f to
-    transform the result from a T to an S.
-    Compare it with map, which takes a list of Ts and a function from T to S,
-    and gives a list of Ss.
-    The existence of fmap is (by definition) what makes Parser functorial. Other
-    functors are List, Set, Optional, etc
-
-    Parser.__rmul__ allows us to write f * p instead of fmap(f, p)
-    """
     def parser_(to_parse: str) -> ParseResults[S] | CouldNotParse:
-        pass
+        result = parser(to_parse)
+        if isinstance(result, CouldNotParse):
+            return result
+        return ParseResults(
+            result=function(result.result),
+            remainder=result.remainder
+        )
 
     return Parser(parser_)
 

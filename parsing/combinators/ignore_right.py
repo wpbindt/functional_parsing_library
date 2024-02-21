@@ -6,12 +6,7 @@ from parsing.strings.word import word
 
 
 def ignore_right(left: Parser[T], right: Parser[S]) -> Parser[T]:
-    """
-    It helps to implement fmap and and_2 first
-    Parses left and right consecutively, and returns the results of the left parser
-    The parser class implements the less than method with this function, so left < right
-    is the same as ignore_right(left, right)
-    """
+    return (lambda t: t[0]) * (left & right)
 
 
 class TestIgnoreRight(unittest.TestCase):
