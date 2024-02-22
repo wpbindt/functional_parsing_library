@@ -1,13 +1,15 @@
 from asserts import assert_parsing_succeeds
-from parsing.examples.person import Person, Honorific
+from parsing.combinators.separated_by import separated_by
+from parsing.examples.person import Person, Honorific, person
 from parsing.parser import Parser
+from parsing.strings.char import char
 
 People = list[Person]
-UniquePeople = set[People]
+UniquePeople = set[Person]
 
 
-people: Parser[People] = ...
-unique_people: Parser[UniquePeople] = ...
+people: Parser[People] = separated_by(person, char(','))
+unique_people: Parser[UniquePeople] = set * people
 
 
 def test_everything() -> None:
