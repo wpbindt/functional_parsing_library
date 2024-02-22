@@ -1,4 +1,5 @@
 import string
+from typing import Any
 
 from asserts import assert_parsing_succeeds
 from parsing.combinators.many import many
@@ -13,7 +14,7 @@ from parsing.strings.word import word
 valid_json_string_chars = string.ascii_letters + 'idk'
 json_string = ''.join * ((char('"') > many(char_in(valid_json_string_chars))) < char('"'))
 
-_json = RecursiveParser()
+_json: RecursiveParser[Any] = RecursiveParser()
 array = (char('[') > some_separated_by(_json.parser, word(', '))) < char(']')
 key_value_pair = (json_string < word(': ')) & _json.parser
 json_object = dict * (

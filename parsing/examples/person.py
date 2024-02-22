@@ -3,12 +3,12 @@ from __future__ import annotations
 import string
 from dataclasses import dataclass
 from enum import Enum
-from typing import Callable
+from typing import Callable, Any
 
 from asserts import assert_parsing_succeeds
 from parsing.combinators.many import many
 from parsing.combinators.parse_and import and_
-from parsing.parser import Parser, T
+from parsing.parser import Parser, S
 from parsing.strings.char import char
 from parsing.strings.char_in import char_in
 from parsing.strings.word import word
@@ -33,8 +33,10 @@ class Person:
             honorific=tuple_[0],
         )
 
-def const(value: T) -> Callable[[], T]:
+
+def const(value: S) -> Callable[[Any], S]:
     return lambda x: value
+
 
 mr = const(Honorific.MR) * (word('Mr.') | word('mr') | word('Mr'))
 ms = const(Honorific.MS) * word('ms')

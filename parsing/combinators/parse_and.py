@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, TypeVarTuple, Unpack
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.strings.char import char
@@ -17,11 +17,14 @@ def and_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[tuple[T, S]]:
 
     return Parser(parser)
 
+Ts = TypeVarTuple('Ts')
 
-def and_(*parser: Parser[Any]) -> Parser[tuple[Any, ...]]:
-    if len(parser) == 1:
-        return (lambda x: (x,)) * parser[0]
-    return (lambda x: (x[0], *x[1])) * (parser[0] & and_(*parser[1:]))
+def and_(
+    *parsers: Parser[T],
+) -> Parser[tuple[T, ...]]:
+    if len(parsers) == 1:
+        return (lambda x: (x,)) * parsers[0]
+    return (lambda x: (x[0], *x[1])) * (parsers[0] & and_(*parsers[1:]))
 
 
 def test_fail_upon_nonsense() -> None:
