@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TypeVar, Protocol, Generic, Callable
+from typing import TypeVar, Generic, Callable
 
 T = TypeVar('T', covariant=True)
 S = TypeVar('S')
@@ -18,13 +18,8 @@ class CouldNotParse:
     pass
 
 
-class ParserFunction(Protocol[T]):
-    def __call__(self, to_parse: str) -> ParseResults[T] | CouldNotParse:
-        pass
-
-
 class Parser(Generic[T]):
-    def __init__(self, parser_function: ParserFunction[T]) -> None:
+    def __init__(self, parser_function: Callable[[str], ParseResults[T] | CouldNotParse]) -> None:
         self._parser_function = parser_function
 
     def __call__(self, to_parse: str) -> ParseResults[T] | CouldNotParse:
