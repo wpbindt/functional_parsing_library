@@ -2,21 +2,23 @@ from inspect import signature
 from typing import Callable, TypeVarTuple, overload, TypeVar, TypeGuard
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.strings.char import char
 from parsing.parser import Parser, T, S, ParseResults, CouldNotParse
+from parsing.strings.char import char
 
 Ts = TypeVarTuple('Ts')
 U = TypeVar('U')
 
 
+def number_of_arguments(function: Callable[[T, U, *Ts], S]) -> int:
+    if function in (int, str, float, dict, set, list, tuple, bool):
+        return 1
+    return len(signature(function).parameters)
+
+
 def accepts_single_argument(
     function: Callable[[T, U, *Ts], S] | Callable[[T], S],
 ) -> TypeGuard[Callable[[T], S]]:
-    if function in (int, str, float, dict, set, list, tuple, bool):
-        return True
-    if len(signature(function).parameters) == 1:
-        return True
-    return False
+    return number_of_arguments(function) == 1
 
 
 def accept_many_arguments(
@@ -60,7 +62,10 @@ def fmap(
                 remainder=result.remainder
             )
 
-        return Parser(parser_1)
+        if number_of_arguments(function) > 2:
+            return Parser(parser_1).as_map()
+        else:
+            return Parser(parser_1)
 
     raise Exception('Function should accept either one or many arguments')
 

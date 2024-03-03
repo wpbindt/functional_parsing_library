@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TypeVar, Generic, Callable
+from typing import TypeVar, Generic, Callable, Self
 
 T = TypeVar('T', covariant=True)
 S = TypeVar('S')
@@ -21,6 +21,7 @@ class CouldNotParse:
 class Parser(Generic[T]):
     def __init__(self, parser_function: Callable[[str], ParseResults[T] | CouldNotParse]) -> None:
         self._parser_function = parser_function
+        self._is_map = False
 
     def __call__(self, to_parse: str) -> ParseResults[T] | CouldNotParse:
         return self._parser_function(to_parse)
@@ -44,3 +45,11 @@ class Parser(Generic[T]):
     def __lt__(self, other: Parser[S]) -> Parser[T]:
         from parsing.combinators.ignore_right import ignore_right
         return ignore_right(left=self, right=other)
+
+    def as_map(self) -> Self:
+        self._is_map = True
+        return self
+
+    @property
+    def is_map(self) -> bool:
+        return self._is_map

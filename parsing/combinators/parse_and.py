@@ -1,4 +1,4 @@
-from typing import Any, TypeVarTuple, Unpack, Callable
+from typing import Any, TypeVarTuple, Unpack, Callable, overload, TypeVar
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.fmap import fmap
@@ -58,7 +58,39 @@ def test_and_many_works_better_than_that() -> None:
     assert_parsing_succeeds(parser, 'abcdefg').with_result(('a', 'b', 'c')).with_remainder('defg')
 
 
+U = TypeVar('U')
+
+
+@overload
+def new_and(left: Parser[Callable[[T, U, *Ts], S]], right: Parser[T]) -> Parser[Callable[[U, *Ts], S]]:
+    pass
+
+
+@overload
 def new_and(left: Parser[Callable[[T], S]], right: Parser[T]) -> Parser[S]:
+    pass
+
+
+def new_and(left, right):
+    if left.is_map:
+        def parser_(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
+            left_result = left(to_parse)
+            if isinstance(left_result, CouldNotParse):
+                return left_result
+
+            parsed_function = left_result.result
+            remainder = left_result.remainder
+            right_result = right(remainder)
+            if isinstance(right_result, CouldNotParse):
+                return right_result
+
+            return ParseResults(
+                result=lambda *ts: parsed_function(right_result.result, *ts),
+                remainder=right_result.remainder
+            )
+
+        return Parser(parser_)
+
     def parser(to_parse: str) -> ParseResults[S] | CouldNotParse:
         left_result = left(to_parse)
         if isinstance(left_result, CouldNotParse):
@@ -86,3 +118,14 @@ def test_new_and_deals_with_callables() -> None:
     b = char('b')
     parser = new_and(fmap(plus, a), b)
     assert_parsing_succeeds(parser, 'abc').with_result('a plus b').with_remainder('c')
+
+
+def test_new_and_deals_with_callables_with_more_arguments() -> None:
+    def plus(left: str, middle: str, right: str) -> str:
+        return f'{left} plus {middle} plus {right}'
+
+    a = char('a')
+    b = char('b')
+    c = char('c')
+    parser = new_and(new_and(fmap(plus, a), b), c)
+    assert_parsing_succeeds(parser, 'abc').with_result('a plus b plus c')
