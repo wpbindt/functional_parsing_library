@@ -65,6 +65,12 @@ class Parser(Generic[T]):
 
 
 class MappedParser(Parser[Callable[[*Ts], S]], Generic[S, *Ts]):
+    """
+    This class exists only to make __rand__ work. In the expression
+    a & b, only if a and b are of different types is __rand__ evaluated.
+    If a and b are of the same type, __rand__ is implemented, and __and__ is
+    not, an error is raised.
+    """
     def __init__(self, parser_function: Callable[[str], ParseResults[Callable[[*Ts], S]] | CouldNotParse]) -> None:
         super().__init__(parser_function)
         self.is_multi_arg = False
