@@ -9,7 +9,7 @@ Ts = TypeVarTuple('Ts')
 U = TypeVar('U')
 
 
-def number_of_arguments(function: Callable[[T, U, *Ts], S]) -> int:
+def number_of_arguments(function: Callable) -> int:
     if function in (int, str, float, dict, set, list, tuple, bool):
         return 1
     return len(signature(function).parameters)

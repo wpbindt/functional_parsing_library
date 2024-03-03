@@ -18,7 +18,9 @@ def and_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[tuple[T, S]]:
 
     return Parser(parser)
 
+
 Ts = TypeVarTuple('Ts')
+
 
 def and_(
     *parsers: Parser[T],
