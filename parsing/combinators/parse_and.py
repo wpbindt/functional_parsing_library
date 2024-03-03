@@ -1,6 +1,7 @@
-from typing import Any, TypeVarTuple, Unpack
+from typing import Any, TypeVarTuple, Unpack, Callable
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
+from parsing.fmap import fmap
 from parsing.strings.char import char
 from parsing.parser import Parser, S, T, ParseResults, CouldNotParse
 
@@ -55,3 +56,33 @@ def test_and_many_works_better_than_that() -> None:
     parser = and_(char('a'), char('b'), char('c'))
 
     assert_parsing_succeeds(parser, 'abcdefg').with_result(('a', 'b', 'c')).with_remainder('defg')
+
+
+def new_and(left: Parser[Callable[[T], S]], right: Parser[T]) -> Parser[S]:
+    def parser(to_parse: str) -> ParseResults[S] | CouldNotParse:
+        left_result = left(to_parse)
+        if isinstance(left_result, CouldNotParse):
+            return left_result
+
+        parsed_function = left_result.result
+        remainder = left_result.remainder
+        right_result = right(remainder)
+        if isinstance(right_result, CouldNotParse):
+            return right_result
+
+        return ParseResults(
+            result=parsed_function(right_result.result),
+            remainder=right_result.remainder
+        )
+
+    return Parser(parser)
+
+
+def test_new_and_deals_with_callables() -> None:
+    def plus(left: str, right: str) -> str:
+        return f'{left} plus {right}'
+
+    a = char('a')
+    b = char('b')
+    parser = new_and(fmap(plus, a), b)
+    assert_parsing_succeeds(parser, 'abc').with_result('a plus b').with_remainder('c')
