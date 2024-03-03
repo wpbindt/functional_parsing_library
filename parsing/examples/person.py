@@ -4,7 +4,7 @@ from typing import Callable, Any
 
 from asserts import assert_parsing_succeeds
 from parsing.combinators.many import many
-from parsing.parser import T, S
+from parsing.parser import S
 from parsing.strings.char import char
 from parsing.strings.char_in import char_in
 from parsing.strings.word import word
