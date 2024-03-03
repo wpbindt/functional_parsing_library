@@ -20,7 +20,7 @@ def some(parser: Parser[T]) -> Parser[list[T]]:
 
 
 def many(parser: Parser[T]) -> Parser[list[T]]:
-    return (lambda t: [t[0], *t[1]]) * (parser & some(parser))
+    return (lambda t, ts: [t, *ts]) * parser & some(parser)
 
 
 def test_some_parses_one() -> None:

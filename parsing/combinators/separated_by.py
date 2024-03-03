@@ -8,7 +8,7 @@ from parsing.strings.word import word
 
 
 def separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:
-    return (lambda result: [result[0], *result[1]]) * (parser & some(separator > parser))
+    return (lambda t, ts: [t, *ts]) * parser & some(separator > parser)
 
 
 nothing = word('')

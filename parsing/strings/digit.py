@@ -1,10 +1,11 @@
 import string
 
 from asserts import assert_parsing_fails, assert_parsing_succeeds
+from parsing.fmap import to_int
 from parsing.strings.char_in import char_in
 
 
-digit = int * char_in(string.digits)
+digit = to_int * char_in(string.digits)
 
 
 def test_that_digit_does_not_parse_letters() -> None:

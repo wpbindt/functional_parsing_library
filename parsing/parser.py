@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TypeVar, Generic, Callable, Self
+from typing import TypeVar, Generic, Callable, overload, TypeVarTuple
 
 T = TypeVar('T', covariant=True)
+Ts = TypeVarTuple('Ts')
 S = TypeVar('S')
+U = TypeVar('U')
 
 
 @dataclass(frozen=True)
@@ -21,7 +23,6 @@ class CouldNotParse:
 class Parser(Generic[T]):
     def __init__(self, parser_function: Callable[[str], ParseResults[T] | CouldNotParse]) -> None:
         self._parser_function = parser_function
-        self._is_map = False
 
     def __call__(self, to_parse: str) -> ParseResults[T] | CouldNotParse:
         return self._parser_function(to_parse)
@@ -30,11 +31,15 @@ class Parser(Generic[T]):
         from parsing.combinators.parse_or import or_2
         return or_2(parser_1=self, parser_2=other)
 
-    def __and__(self, other: Parser[S]) -> Parser[tuple[T, S]]:
-        from parsing.combinators.parse_and import and_2
-        return and_2(parser_1=self, parser_2=other)
+    @overload
+    def __rmul__(self, other: Callable[[T, U, *Ts], S]) -> MappedParser[S, U, *Ts]:
+        pass
 
+    @overload
     def __rmul__(self, other: Callable[[T], S]) -> Parser[S]:
+        pass
+
+    def __rmul__(self, other):
         from parsing.fmap import fmap
         return fmap(function=other, parser=self)
 
@@ -46,10 +51,20 @@ class Parser(Generic[T]):
         from parsing.combinators.ignore_right import ignore_right
         return ignore_right(left=self, right=other)
 
-    def as_map(self) -> Self:
-        self._is_map = True
-        return self
+    @overload
+    def __rand__(self, other: MappedParser[S, T]) -> Parser[S]:
+        pass
 
-    @property
-    def is_map(self) -> bool:
-        return self._is_map
+    @overload
+    def __rand__(self, other: MappedParser[S, T, U, *Ts]) -> MappedParser[S, U, *Ts]:
+        pass
+
+    def __rand__(self, other):
+        from parsing.combinators.parse_and import new_and
+        return new_and(left=other, right=self)
+
+
+class MappedParser(Parser[Callable[[*Ts], S]], Generic[S, *Ts]):
+    def __init__(self, parser_function: Callable[[str], ParseResults[Callable[[*Ts], S]] | CouldNotParse]) -> None:
+        super().__init__(parser_function)
+        self.is_multi_arg = False

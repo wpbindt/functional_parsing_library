@@ -16,7 +16,7 @@ json_string = ''.join * ((char('"') > many(char_in(valid_json_string_chars))) < 
 
 _json: RecursiveParser[Any] = RecursiveParser()
 array = (char('[') > some_separated_by(_json.parser, word(', '))) < char(']')
-key_value_pair = (json_string < word(': ')) & _json.parser
+key_value_pair = (lambda t, s: (t, s)) * (json_string < word(': ')) & _json.parser
 json_object = dict * (
     (char('{') > some_separated_by(key_value_pair, word(', '))) < char('}')
 )

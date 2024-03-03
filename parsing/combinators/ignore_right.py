@@ -4,7 +4,7 @@ from parsing.strings.word import word
 
 
 def ignore_right(left: Parser[T], right: Parser[S]) -> Parser[T]:
-    return (lambda t: t[0]) * (left & right)
+    return (lambda t, s: t) * left & right
 
 
 def test_that_ignore_right_parses_both_and_returns_left() -> None:
