@@ -38,7 +38,7 @@ def test_that_regular_text_gets_parsed_to_regular_text() -> None:
 
 def test_that_new_lines_are_parsed_as_such() -> None:
     input_ = 'hi there\n\nthis is another paragraph\n'
-    expected = [
+    expected: MarkLeft = [
         RegularText('hi there'),
         NewLine(),
         RegularText('this is another paragraph'),
