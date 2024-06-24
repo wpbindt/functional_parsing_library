@@ -5,26 +5,26 @@ from typing import Any, Generic
 from parsing.parser import Parser, S, CouldNotParse, ParseResults
 
 
-class ParsingTestResult(Generic[S]):
+class _ParsingSuccessTestResult(Generic[S]):
     def __init__(
         self,
         actual: ParseResults[S],
     ) -> None:
         self._actual = actual
 
-    def with_result(self, expected: S) -> ParsingTestResult[S]:
+    def with_result(self, expected: S) -> _ParsingSuccessTestResult[S]:
         assert self._actual.result == expected
         return self
 
-    def with_remainder(self, expected: str) -> ParsingTestResult[S]:
+    def with_remainder(self, expected: str) -> _ParsingSuccessTestResult[S]:
         assert self._actual.remainder == expected
         return self
 
 
-def assert_parsing_succeeds(parser: Parser[S], to_parse: str) -> ParsingTestResult[S]:
+def assert_parsing_succeeds(parser: Parser[S], to_parse: str) -> _ParsingSuccessTestResult[S]:
     result = parser(to_parse)
     assert not isinstance(result, CouldNotParse)
-    return ParsingTestResult(
+    return _ParsingSuccessTestResult(
         actual=result,
     )
 
