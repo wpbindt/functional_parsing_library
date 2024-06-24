@@ -51,4 +51,4 @@ def test_that_regular_text_skips_special_characters(special_character: str) -> N
 
 
 def test_that_regular_text_parses_to_regular_text() -> None:
-    assert_parsing_succeeds(regular_text, f'hi mom').with_result(RegularText('hi mom'))
+    assert_parsing_succeeds(regular_text, 'hi mom').with_result(RegularText('hi mom'))

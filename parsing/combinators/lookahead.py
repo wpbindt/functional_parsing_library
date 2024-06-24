@@ -1,3 +1,5 @@
+from typing import cast
+
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from parsing.parser import Parser, S, U, ParseResults, CouldNotParse
 from parsing.strings.word import word
@@ -21,7 +23,7 @@ def test_that_lookahead_looks_ahead() -> None:
 
 def test_that_lookahead_fails_when_lookahead_not_ahead() -> None:
     parser = lookahead(word('a'), look_for=word('b'))
-    expected_failure_message = word('b')('').reason
+    expected_failure_message = cast(CouldNotParse, word('b')('')).reason
 
     assert_parsing_fails(parser, 'a').with_reason(expected_failure_message)
 
