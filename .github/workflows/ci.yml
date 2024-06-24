@@ -34,6 +34,6 @@ jobs:
 
       - name: Deploy
         env:
-          TWINE_USERNAME: ${{ secrets.twine_username }}
+          TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.twine_password }}
         run: make deploy
