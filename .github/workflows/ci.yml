@@ -36,4 +36,7 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.twine_password }}
-        run: make deploy
+        run:
+          - echo TWINE_USERNAME=$TWINE_USERNAME >> /tmp/.env
+          - echo TWINE_PASSWORD=$TWINE_PASSWORD >> /tmp/.env
+          - make deploy
