@@ -1,4 +1,4 @@
-DOCKER_RUN = docker run -it -v $(CURDIR):/srv parsing_library
+DOCKER_RUN = docker run -v $(CURDIR):/srv parsing_library
 
 .PHONY: image
 image:
@@ -19,4 +19,4 @@ flake:
 .PHONY: deploy
 deploy: image
 	$(DOCKER_RUN) python3 -m build
-	$(DOCKER_RUN) python3 -m twine upload --repository testpypi dist/*
+	$(DOCKER_RUN) python3 -m twine upload --non-interactive --repository testpypi dist/*
