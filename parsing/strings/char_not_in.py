@@ -1,14 +1,14 @@
 from collections.abc import Container
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
+from parsing.check_for_empty_string import check_for_empty_string
 from parsing.parser import Parser, ParseResults, CouldNotParse
 from parsing.pop_one_character import pop_one_character
 
 
 def char_not_in(characters: Container[str]) -> Parser[str]:
+    @check_for_empty_string
     def parser(to_parse: str) -> ParseResults[str] | CouldNotParse:
-        if len(to_parse) == 0:
-            return CouldNotParse()
         if to_parse[0] in characters:
             return CouldNotParse()
         return pop_one_character(to_parse)

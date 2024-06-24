@@ -1,12 +1,11 @@
 from asserts import assert_parsing_fails, assert_parsing_succeeds
+from parsing.check_for_empty_string import check_for_empty_string
 from parsing.parser import CouldNotParse, Parser, ParseResults
 from parsing.pop_one_character import pop_one_character
 
 
+@check_for_empty_string
 def _any_char(to_parse: str) -> ParseResults[str] | CouldNotParse:
-    if len(to_parse) == 0:
-        return CouldNotParse('String to parse is empty')
-
     return pop_one_character(to_parse)
 
 
