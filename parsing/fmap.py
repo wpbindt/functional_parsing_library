@@ -82,6 +82,17 @@ def test_that_fmap_still_fails_to_parse_unparsable_stuff() -> None:
     assert_parsing_fails(parser, 'h')
 
 
+def test_that_fmap_passes_on_failure_reason() -> None:
+    parse_to_map_over = char('3')
+    parser = to_int * parse_to_map_over
+    to_parse = 'h'
+    inner_result = parse_to_map_over(to_parse)
+    assert isinstance(inner_result, CouldNotParse)
+    inner_reason = inner_result.reason
+
+    assert_parsing_fails(parser, to_parse).with_reason(inner_reason)
+
+
 def test_that_fmap_successfully_parses_parsable_stuff() -> None:
     parser = to_int * char('3')
 
