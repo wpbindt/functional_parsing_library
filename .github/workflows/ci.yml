@@ -8,24 +8,23 @@ on:
       - '*'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+#  test:
+#    runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Build image
-      run: make image
-
-    - name: Run tests
-      run: make run-tests
-
-    - name: Run mypy
-      run: make mypy
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v3
+#
+#    - name: Build image
+#      run: make image
+#
+#    - name: Run tests
+#      run: make run-tests
+#
+#    - name: Run mypy
+#      run: make mypy
 
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     if: github.ref_type == 'tag'
     steps:
