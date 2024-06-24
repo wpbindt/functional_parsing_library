@@ -1,15 +1,21 @@
+DOCKER_RUN = docker run -v $(CURDIR):/srv parsing_library
+
 .PHONY: image
 image:
 	docker build -t parsing_library .
 
 .PHONY: run-tests
 run-tests:
-	docker run -v $(CURDIR):/srv parsing_library pytest /srv
+	$(DOCKER_RUN) pytest .
 
 .PHONY: mypy
 mypy:
-	docker run -v $(CURDIR):/srv parsing_library mypy /srv
+	$(DOCKER_RUN) mypy .
 
 .PHONY: flake
 flake:
-	docker run -v $(CURDIR):/srv parsing_library flake8 /srv
+	$(DOCKER_RUN) flake8 .
+
+.PHONY: build
+build:
+	$(DOCKER_RUN) python3 -m build
