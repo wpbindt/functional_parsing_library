@@ -1,4 +1,4 @@
-DOCKER_RUN = docker run -v $(CURDIR):/srv parsing_library
+DOCKER_RUN = docker run -it -v $(CURDIR):/srv parsing_library
 
 .PHONY: image
 image:
