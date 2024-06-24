@@ -35,7 +35,7 @@ jobs:
       - name: Deploy
         env:
           TWINE_USERNAME: __token__
-          TWINE_PASSWORD: pypi-AgEIcHlwaS5vcmcCJGZkOGE4YTM2LTE2MjAtNDU2Yy1iNjFkLWE2MzdhZWZlNGJlZgACKlszLCI3NWVlMThkZi1iYWZkLTRkMGYtODMzNi1mZWVjNjQ0YmI1YjgiXQAABiB_O63lKYiAU4JUnp_WavtXHEBgyJv6FZMNH3v_jxBaBw
+          TWINE_PASSWORD: pypi-AgEIcHlwaS5vcmcCJDQzZGM4MWM4LTI4ZTMtNGZkMy05YzRkLTRhZTBkM2MzMWI5MQACIlsxLFsiZnVuY3Rpb25hbC1wYXJzaW5nLWxpYnJhcnkiXV0AAixbMixbIjZiYTEzODQ5LTJiNGUtNDg1My1iNjI0LTU3NzI1ZmNiMTNiNSJdXQAABiCpnP-PNWu2C4_Js_AdrvoZvu5NZpGQEOKXKBvevFu5OQ
         run: |
           pip install twine
           make build
