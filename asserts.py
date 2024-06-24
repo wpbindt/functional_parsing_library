@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Generic
+from typing import Any, Generic, Self
 
 from parsing.parser import Parser, S, CouldNotParse, ParseResults
 
@@ -29,5 +29,16 @@ def assert_parsing_succeeds(parser: Parser[S], to_parse: str) -> _ParsingSuccess
     )
 
 
-def assert_parsing_fails(parser: Parser[Any], to_parse: str) -> None:
-    assert parser(to_parse) == CouldNotParse()
+class _ParsingFailureTestResult:
+    def __init__(self, result: CouldNotParse) -> None:
+        self._result = result
+
+    def with_reason(self, reason: str) -> Self:
+        assert self._result.reason == reason
+        return self
+
+
+def assert_parsing_fails(parser: Parser[Any], to_parse: str) -> _ParsingFailureTestResult:
+    result = parser(to_parse)
+    assert isinstance(result, CouldNotParse)
+    return _ParsingFailureTestResult(result)

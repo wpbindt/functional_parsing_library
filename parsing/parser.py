@@ -16,8 +16,13 @@ class ParseResults(Generic[T]):
 
 
 @dataclass(frozen=True)
-class CouldNotParse:
+class NoReasonSpecified:
     pass
+
+
+@dataclass(frozen=True)
+class CouldNotParse:
+    reason: str | NoReasonSpecified = NoReasonSpecified()
 
 
 class Parser(Generic[T]):
