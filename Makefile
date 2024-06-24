@@ -19,4 +19,4 @@ flake:
 .PHONY: deploy
 deploy: image
 	$(DOCKER_RUN) python3 -m build
-	docker run -v $(CURDIR):/srv -e TWINE_PASSWORD=$(TWINE_PASSWORD) -e TWINE_USERNAME=$(TWINE_USERNAME) python3 -m twine upload --non-interactive --repository testpypi dist/*
+	docker run -v $(CURDIR):/srv -e TWINE_PASSWORD=$(TWINE_PASSWORD) -e TWINE_USERNAME=$(TWINE_USERNAME) parsing_library python3 -m twine upload --non-interactive --repository testpypi dist/*
