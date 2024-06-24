@@ -16,7 +16,6 @@ mypy:
 flake:
 	$(DOCKER_RUN) flake8 .
 
-.PHONY: deploy
-deploy: image
+.PHONY: build
+build: image
 	$(DOCKER_RUN) python3 -m build
-	docker run -v $(CURDIR):/srv --env-file=/tmp/.env parsing_library python3 -m twine upload --non-interactive --repository pypi dist/*
