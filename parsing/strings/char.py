@@ -7,7 +7,7 @@ def char(c: str) -> Parser[str]:
         if len(to_parse) == 0:
             return CouldNotParse('String to parse is empty')
         if to_parse[0] != c:
-            return CouldNotParse()
+            return CouldNotParse(f'String "{to_parse}" does not start with "{c}"')
         return ParseResults(c, to_parse[1:])
 
     return Parser(parser)
@@ -19,7 +19,7 @@ def test_that_empty_strings_do_not_parse() -> None:
 
 def test_that_parsing_a_different_character_fails() -> None:
     h_parser = char('h')
-    assert_parsing_fails(h_parser, 'n')
+    assert_parsing_fails(h_parser, 'peep').with_reason('String "peep" does not start with "h"')
 
 
 def test_that_parsing_h_succeeds() -> None:
