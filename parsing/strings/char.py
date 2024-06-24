@@ -4,7 +4,9 @@ from parsing.parser import Parser, ParseResults, CouldNotParse
 
 def char(c: str) -> Parser[str]:
     def parser(to_parse: str) -> ParseResults[str] | CouldNotParse:
-        if len(to_parse) == 0 or to_parse[0] != c:
+        if len(to_parse) == 0:
+            return CouldNotParse('String to parse is empty')
+        if to_parse[0] != c:
             return CouldNotParse()
         return ParseResults(c, to_parse[1:])
 
@@ -12,7 +14,7 @@ def char(c: str) -> Parser[str]:
 
 
 def test_that_empty_strings_do_not_parse() -> None:
-    assert_parsing_fails(char('h'), '')
+    assert_parsing_fails(char('h'), '').with_reason('String to parse is empty')
 
 
 def test_that_parsing_a_different_character_fails() -> None:
