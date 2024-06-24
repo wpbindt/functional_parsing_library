@@ -40,10 +40,15 @@ MarkLeftToken = RegularText | NewLine | Header | BoldText
 
 SPECIAL_CHARACTERS = '*\n'
 
-
-regular_text = many(char_not_in(SPECIAL_CHARACTERS))
+normal_character = char_not_in(SPECIAL_CHARACTERS)
+normal_words = ''.join * many(normal_character)
+regular_text = RegularText * normal_words
 
 
 @pytest.mark.parametrize('special_character', list(SPECIAL_CHARACTERS))
-def test_that_regular_text_parses_until_new_line_exclusive(special_character: str) -> None:
+def test_that_regular_text_skips_special_characters(special_character: str) -> None:
     assert_parsing_succeeds(regular_text, f'hi mom{special_character}').with_remainder(special_character)
+
+
+def test_that_regular_text_parses_to_regular_text() -> None:
+    assert_parsing_succeeds(regular_text, f'hi mom').with_result(RegularText('hi mom'))
