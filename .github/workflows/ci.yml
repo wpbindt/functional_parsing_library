@@ -35,7 +35,7 @@ jobs:
       - name: Deploy
         env:
           TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.best_fucking_effort_is_trash }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: |
           pip install twine
           make build
