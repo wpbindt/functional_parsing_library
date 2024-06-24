@@ -2,8 +2,11 @@ from dataclasses import dataclass
 
 import pytest
 
-from asserts import assert_parsing_succeeds
+from asserts import assert_parsing_succeeds, assert_parsing_fails
+from parsing.combinators.lookahead import lookahead
 from parsing.combinators.many import many
+from parsing.examples.person import const
+from parsing.strings.char import char
 from parsing.strings.char_not_in import char_not_in
 
 
@@ -35,7 +38,7 @@ class BoldText:
     content: str
 
 
-MarkLeftToken = RegularText | NewLine | Header | BoldText
+MarkLeftToken = RegularText | Header | BoldText | NewLine
 
 
 SPECIAL_CHARACTERS = '*\n'
@@ -43,6 +46,8 @@ SPECIAL_CHARACTERS = '*\n'
 normal_character = char_not_in(SPECIAL_CHARACTERS)
 normal_words = ''.join * many(normal_character)
 regular_text = RegularText * normal_words
+
+new_line = const(NewLine()) * lookahead(char('\n'), char('\n'))
 
 
 @pytest.mark.parametrize('special_character', list(SPECIAL_CHARACTERS))
@@ -52,3 +57,11 @@ def test_that_regular_text_skips_special_characters(special_character: str) -> N
 
 def test_that_regular_text_parses_to_regular_text() -> None:
     assert_parsing_succeeds(regular_text, 'hi mom').with_result(RegularText('hi mom'))
+
+
+def test_that_new_line_does_not_parse_single_new_line() -> None:
+    assert_parsing_fails(new_line, '\n')
+
+
+def test_that_new_line_parses_double_new_line_and_consumes_only_one() -> None:
+    assert_parsing_succeeds(new_line, '\n\n').with_result(NewLine()).with_remainder('\n')
