@@ -26,17 +26,15 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     if: github.ref_type == 'tag'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: pypi-AgEIcHlwaS5vcmcCJGQxNWIxNTJkLTI1OWYtNDQ0Mi04OGZmLWI2Y2M4NGFmNDZhYgACKlszLCI3NWVlMThkZi1iYWZkLTRkMGYtODMzNi1mZWVjNjQ0YmI1YjgiXQAABiBCWspjuU64eKdFamKGGoT-1IIN5ecMj9LCEsnw4Q-8Bw
-        run: |
-          echo $TWINE_PASSWORD
-          pip install twine
-          make build
-          python3 -m twine upload --verbose --non-interactive --repository pypi dist/*
+      - name: build dist
+        run: make build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
