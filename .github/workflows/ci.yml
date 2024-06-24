@@ -36,6 +36,7 @@ jobs:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: pypi-AgEIcHlwaS5vcmcCJDQ0YzZlYjAzLTZiNzYtNDM3YS05ZmQyLTMxYTc0Yzg2NzM4YwACIlsxLFsiZnVuY3Rpb25hbC1wYXJzaW5nLWxpYnJhcnkiXV0AAixbMixbIjZiYTEzODQ5LTJiNGUtNDg1My1iNjI0LTU3NzI1ZmNiMTNiNSJdXQAABiC1LhoRfHVMosaX5yK-lVwwRk-zKuKheGBO-pVJN2lwjw
         run: |
+          echo $TWINE_PASSWORD
           pip install twine
           make build
           python3 -m twine upload --verbose --non-interactive --repository pypi dist/*
