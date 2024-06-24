@@ -1,10 +1,12 @@
 from asserts import assert_parsing_succeeds, assert_parsing_fails
+from parsing.check_for_empty_string import check_for_empty_string
 from parsing.parser import U, Parser, ParseResults, CouldNotParse
 from parsing.pop_one_character import pop_one_character
 from parsing.strings.char import char
 
 
 def char_does_not_match(parser: Parser[U]) -> Parser[str]:
+    @check_for_empty_string
     def parser_(to_parse: str) -> ParseResults[str] | CouldNotParse:
         result = parser(to_parse)
         if not isinstance(result, CouldNotParse):
