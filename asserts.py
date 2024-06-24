@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Generic, Self
 
-from parsing.parser import Parser, S, CouldNotParse, ParseResults
+from parsing.parser import Parser, S, CouldNotParse, ParseResults, FailureReason
 
 
 class _ParsingSuccessTestResult(Generic[S]):
@@ -33,7 +33,7 @@ class _ParsingFailureTestResult:
     def __init__(self, result: CouldNotParse) -> None:
         self._result = result
 
-    def with_reason(self, reason: str) -> Self:
+    def with_reason(self, reason: FailureReason) -> Self:
         assert self._result.reason == reason
         return self
 

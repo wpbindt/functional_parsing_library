@@ -20,9 +20,12 @@ class NoReasonSpecified:
     pass
 
 
+FailureReason = NoReasonSpecified | str
+
+
 @dataclass(frozen=True)
 class CouldNotParse:
-    reason: str | NoReasonSpecified = NoReasonSpecified()
+    reason: FailureReason = NoReasonSpecified()
 
 
 class Parser(Generic[T]):
