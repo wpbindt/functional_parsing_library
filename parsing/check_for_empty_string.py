@@ -4,7 +4,9 @@ from typing import Callable
 from parsing.parser import CouldNotParse, ParseResults, U
 
 
-def check_for_empty_string(parse_function: Callable[[str], ParseResults[U] | CouldNotParse]) -> Callable[[str], ParseResults[U] | CouldNotParse]:
+def check_for_empty_string(
+    parse_function: Callable[[str], ParseResults[U] | CouldNotParse],
+) -> Callable[[str], ParseResults[U] | CouldNotParse]:
     @functools.wraps(parse_function)
     def parser_(to_parse: str) -> ParseResults[U] | CouldNotParse:
         if len(to_parse) == 0:
