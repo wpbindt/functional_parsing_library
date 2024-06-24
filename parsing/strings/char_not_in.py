@@ -2,6 +2,7 @@ from collections.abc import Container
 
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from parsing.parser import Parser, ParseResults, CouldNotParse
+from parsing.pop_one_character import pop_one_character
 
 
 def char_not_in(characters: Container[str]) -> Parser[str]:
@@ -10,10 +11,7 @@ def char_not_in(characters: Container[str]) -> Parser[str]:
             return CouldNotParse()
         if to_parse[0] in characters:
             return CouldNotParse()
-        return ParseResults(
-            result=to_parse[0],
-            remainder=to_parse[1:],
-        )
+        return pop_one_character(to_parse)
 
     return Parser(parser)
 

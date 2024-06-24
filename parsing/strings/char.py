@@ -1,5 +1,6 @@
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.parser import Parser, ParseResults, CouldNotParse
+from parsing.pop_one_character import pop_one_character
 
 
 def char(c: str) -> Parser[str]:
@@ -8,7 +9,8 @@ def char(c: str) -> Parser[str]:
             return CouldNotParse('String to parse is empty')
         if to_parse[0] != c:
             return CouldNotParse(f'String "{to_parse}" does not start with "{c}"')
-        return ParseResults(c, to_parse[1:])
+
+        return pop_one_character(to_parse)
 
     return Parser(parser)
 

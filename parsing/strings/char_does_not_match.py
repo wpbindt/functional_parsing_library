@@ -1,5 +1,6 @@
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from parsing.parser import U, Parser, ParseResults, CouldNotParse
+from parsing.pop_one_character import pop_one_character
 from parsing.strings.char import char
 
 
@@ -8,10 +9,8 @@ def char_does_not_match(parser: Parser[U]) -> Parser[str]:
         result = parser(to_parse)
         if not isinstance(result, CouldNotParse):
             return CouldNotParse()
-        return ParseResults(
-            result=to_parse[0],
-            remainder=to_parse[1:]
-        )
+
+        return pop_one_character(to_parse)
 
     return Parser(parser_)
 

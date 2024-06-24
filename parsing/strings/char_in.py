@@ -1,12 +1,14 @@
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.parser import Parser, ParseResults, CouldNotParse
+from parsing.pop_one_character import pop_one_character
 
 
 def char_in(string: str) -> Parser[str]:
     def parser(to_parse: str) -> ParseResults[str] | CouldNotParse:
         if to_parse[0] not in string:
             return CouldNotParse()
-        return ParseResults(to_parse[0], to_parse[1:])
+
+        return pop_one_character(to_parse)
 
     return Parser(parser)
 

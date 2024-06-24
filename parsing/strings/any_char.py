@@ -1,14 +1,13 @@
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.parser import CouldNotParse, Parser, ParseResults
+from parsing.pop_one_character import pop_one_character
 
 
 def _any_char(to_parse: str) -> ParseResults[str] | CouldNotParse:
     if len(to_parse) == 0:
         return CouldNotParse('String to parse is empty')
-    return ParseResults(
-        result=to_parse[0],
-        remainder=to_parse[1:],
-    )
+
+    return pop_one_character(to_parse)
 
 
 any_char = Parser(_any_char)
