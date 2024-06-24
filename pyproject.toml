@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "functional_parsing_library"
-version = "0.0.1"
+readme = "README.md"
+version = "0.0.7"
 authors = [
   { name="Wessel Bindt", email="wesselbindt@gmail.com" },
 ]

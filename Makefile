@@ -16,7 +16,6 @@ mypy:
 flake:
 	$(DOCKER_RUN) flake8 .
 
-.PHONY: deploy
-deploy: image
+.PHONY: build
+build: image
 	$(DOCKER_RUN) python3 -m build
-	$(DOCKER_RUN) python3 -m twine upload --repository testpypi dist/*

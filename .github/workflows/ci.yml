@@ -1,4 +1,4 @@
-name: tests
+name: test and maybe deploy
 
 on:
   push:
@@ -26,14 +26,16 @@ jobs:
 
   deploy:
     needs: test
-    runs-on: ubuntu-latest
     if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy
-        env:
-          TWINE_USERNAME: ${{ secrets.twine_username }}
-          TWINE_PASSWORD: ${{ secrets.twine_password }}
-        run: make deploy
+      - name: build dist
+        run: make build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
