@@ -3,7 +3,7 @@ from collections.abc import Container
 from asserts import assert_parsing_fails, assert_parsing_succeeds
 from parsing.check_for_empty_string import check_for_empty_string
 from parsing.parser import Parser, ParseResults, CouldNotParse
-from parsing.pop_one_character import pop_one_character
+from parsing.strings.pop_one_character import pop_one_character
 
 
 def char_in(string: Container[str]) -> Parser[str]:

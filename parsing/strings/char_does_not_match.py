@@ -1,7 +1,7 @@
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from parsing.check_for_empty_string import check_for_empty_string
 from parsing.parser import U, Parser, ParseResults, CouldNotParse
-from parsing.pop_one_character import pop_one_character
+from parsing.strings.pop_one_character import pop_one_character
 from parsing.strings.char import char
 
 
