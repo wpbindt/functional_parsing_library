@@ -19,3 +19,7 @@ flake:
 .PHONY: build
 build: image
 	$(DOCKER_RUN) python3 -m build
+
+.PHONY: clean
+clean:
+	$(DOCKER_RUN) rm -rf dist functional_parsing_library.egg-info

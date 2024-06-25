@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "functional_parsing_library"
 readme = "README.md"
-version = "0.0.9"
+version = "0.0.10"
 authors = [
   { name="Wessel Bindt", email="wesselbindt@gmail.com" },
 ]
@@ -14,9 +14,6 @@ requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
-]
-dependencies = [
-    "pytest==8.0.1",
 ]
 
 [tool.pytest.ini_options]
