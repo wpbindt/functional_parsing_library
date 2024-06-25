@@ -32,4 +32,12 @@ reveal_type(add_strings * word('hi') & word('hi'))
 reveal_type(add_strings * word('hi') & word('hi') & word('di'))
 ```
 will show that the first parser has type `MappedParser[int, str, str]`, the second `MappedParser[int, str]`, and the
-third `Parser[int]`.
+third `Parser[int]`. Something like
+```python
+add_strings * word('hi') & word('hi') & integer
+```
+or
+```python
+add_strings * word('hi') & word('hi') & word('hi') & word('hi')
+```
+will give a type error.
