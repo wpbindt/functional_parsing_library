@@ -4,10 +4,11 @@ A small production non-ready Python library implementing basic applicative parse
 with signature `str -> T | CouldNotParse` transforming strings into structured data. For example, you might have a function
 `integer` which will transform `"1"` and `"-1919"` to the integers `1` and `-1919`, and the string `"boink"` to `CouldNotParse()`.
 
-What makes these functions useful is that they can be combined with so-called parser combinators. For example, if we 
-already have parsers `nonnegative_integer` and `negative_integer`, the `integer` parser from earlier could be written as 
-`integer = nonnegative_integer | negative_integer`. This library implements various such combinators, such as `many`, 
-`some`, `ignore_left`, `many_till`, and so on.
+What makes these functions useful is that they can be combined with so-called parser combinators. This way, complicated parsers
+can be gradually built up from smaller, simpler parsers. 
+For example, if we already have parsers `nonnegative_integer` and `negative_integer`, the `integer` parser from earlier 
+could be written as `integer = nonnegative_integer | negative_integer`, where `|` should be read as "or". This library 
+implements various such combinators, such as `many`, `some`, `ignore_left`, `many_till`, and so on.
 
 Another piece of structure that makes these functions useful is that they're functorial: If I have a parser `p` of type 
 `Parser[T]` (that is, a function which parses strings to objects of type `T`), and a function `f: T -> S`, then `f * p`
@@ -35,7 +36,7 @@ reveal_type(add_strings * word('hi') & word('hi'))
 reveal_type(add_strings * word('hi') & word('hi') & word('di'))
 ```
 will show that the first parser has type `MappedParser[int, str, str]`, the second `MappedParser[int, str]`, and the
-third `Parser[int]`. Something like
+third `Parser[int]`. Expressions like
 ```python
 add_strings * word('hi') & word('hi') & integer
 ```
@@ -43,4 +44,4 @@ or
 ```python
 add_strings * word('hi') & word('hi') & word('hi') & word('hi')
 ```
-will give a type error.
+will raise a `TypeError`, and mypy will catch this.
