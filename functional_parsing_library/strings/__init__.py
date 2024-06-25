@@ -1,0 +1,7 @@
+from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library.strings.modules.word import word
+from functional_parsing_library.strings.modules.char_in import char_in
+from functional_parsing_library.strings.modules.any_char import any_char
+from functional_parsing_library.strings.modules.char_does_not_match import char_does_not_match
+from functional_parsing_library.strings.modules.char_not_in import char_not_in
+from functional_parsing_library.strings.modules.digit import digit
