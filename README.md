@@ -23,7 +23,7 @@ and match `q`, and finally it will apply `f`.
 Another feature of this library is its type safety. Running mypy on
 
 ```python
-from functional_parsing_library.strings.modules.word import word
+from functional_parsing_library.strings import word
 
 
 def add_strings(one: str, two: str, three: str) -> int:
