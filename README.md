@@ -19,3 +19,17 @@ The length of this list is 3, so `len * many(word('borf'))` parses our string to
 This works with multi-argument functions as well. If `f` is a function of type `[T, S] -> U`, and we have parsers `p`
 and `q` for objects of type `T` and `S`, then `f * p & q` will first try to match `p`, and if this succeeds it will try
 and match `q`, and finally it will apply `f`.
+
+Another feature of this library is its type safety. Running mypy on
+```python
+from functional_parsing_library.strings.word import word
+
+def add_strings(one: str, two: str, three: str) -> int:
+    return len(one + two + three)
+
+reveal_type(add_strings * word('hi'))
+reveal_type(add_strings * word('hi') & word('hi'))
+reveal_type(add_strings * word('hi') & word('hi') & word('di'))
+```
+will show that the first parser has type `MappedParser[int, str, str]`, the second `MappedParser[int, str]`, and the
+third `Parser[int]`.
