@@ -1,7 +1,7 @@
 from typing import Any
 
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.combinators.many import some
+from functional_parsing_library.combinators.sequence.many import some
 from functional_parsing_library.parser import Parser, T
 from functional_parsing_library.strings.char import char
 from functional_parsing_library.strings.word import word

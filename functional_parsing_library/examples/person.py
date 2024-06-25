@@ -3,7 +3,7 @@ from enum import auto, Enum
 from typing import Callable, Any
 
 from functional_parsing_library.asserts import assert_parsing_succeeds
-from functional_parsing_library.combinators.many import many
+from functional_parsing_library.combinators.sequence.many import many
 from functional_parsing_library.parser import S
 from functional_parsing_library.strings.char import char
 from functional_parsing_library.strings.char_in import char_in

@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.combinators.many import many
+from functional_parsing_library.combinators.sequence.many import many
 from functional_parsing_library.parser import Parser, U, S
 from functional_parsing_library.strings.word import word
 

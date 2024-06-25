@@ -52,11 +52,11 @@ class Parser(Generic[T]):
         return fmap(function=other, parser=self)
 
     def __gt__(self, other: Parser[S]) -> Parser[S]:
-        from functional_parsing_library.combinators.ignore_left import ignore_left
+        from functional_parsing_library.combinators.ignore.ignore_left import ignore_left
         return ignore_left(left=self, right=other)
 
     def __lt__(self, other: Parser[S]) -> Parser[T]:
-        from functional_parsing_library.combinators.ignore_right import ignore_right
+        from functional_parsing_library.combinators.ignore.ignore_right import ignore_right
         return ignore_right(left=self, right=other)
 
     @overload

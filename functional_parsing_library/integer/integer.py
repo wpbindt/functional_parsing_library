@@ -5,7 +5,7 @@ from functional_parsing_library.fmap import to_int
 from functional_parsing_library.strings.char import char
 from functional_parsing_library.strings.char_in import char_in
 from functional_parsing_library.hacky_function_composition import o
-from functional_parsing_library.combinators.many import many
+from functional_parsing_library.combinators.sequence.many import many
 
 
 digit = char_in(string.digits)

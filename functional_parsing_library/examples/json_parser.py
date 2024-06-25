@@ -2,8 +2,8 @@ import string
 from typing import Any
 
 from functional_parsing_library.asserts import assert_parsing_succeeds
-from functional_parsing_library.combinators.many import many
-from functional_parsing_library.combinators.separated_by import some_separated_by
+from functional_parsing_library.combinators.sequence.many import many
+from functional_parsing_library.combinators.sequence.separated_by import some_separated_by
 from functional_parsing_library.integer.integer import integer
 from functional_parsing_library.recursive_parser import RecursiveParser
 from functional_parsing_library.strings.char import char
