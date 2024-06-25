@@ -4,8 +4,8 @@ from functional_parsing_library.asserts import assert_parsing_succeeds
 from functional_parsing_library.combinators.sequence.many import many
 from functional_parsing_library.combinators.sequence.separated_by import separated_by
 from functional_parsing_library.integer.integer import integer
-from functional_parsing_library.strings.char import char
-from functional_parsing_library.strings.char_not_in import char_not_in
+from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library.strings.modules.char_not_in import char_not_in
 
 Value = str | int
 

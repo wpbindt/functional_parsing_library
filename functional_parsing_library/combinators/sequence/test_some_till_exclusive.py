@@ -1,6 +1,6 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
 from functional_parsing_library.combinators.sequence.some_till_exclusive import some_till_exclusive
-from functional_parsing_library.strings.word import word
+from functional_parsing_library.strings.modules.word import word
 
 
 def test_that_some_till_exclusive_matches_some_and_keeps_remainder() -> None:

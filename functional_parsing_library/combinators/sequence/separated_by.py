@@ -2,7 +2,7 @@ from typing import Any
 
 from functional_parsing_library.combinators.sequence.many import some
 from functional_parsing_library.parser import Parser, T
-from functional_parsing_library.strings.word import word
+from functional_parsing_library.strings.modules.word import word
 
 
 def separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:

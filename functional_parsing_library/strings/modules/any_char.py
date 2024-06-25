@@ -1,6 +1,6 @@
 from functional_parsing_library.check_for_empty_string import check_for_empty_string
 from functional_parsing_library.parser import CouldNotParse, Parser, ParseResults
-from functional_parsing_library.strings.pop_one_character import pop_one_character
+from functional_parsing_library.strings.modules.pop_one_character import pop_one_character
 
 
 @check_for_empty_string

@@ -3,7 +3,7 @@ from typing import cast
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
 from functional_parsing_library.combinators.lookahead import lookahead
 from functional_parsing_library.parser import CouldNotParse
-from functional_parsing_library.strings.word import word
+from functional_parsing_library.strings.modules.word import word
 
 
 def test_that_lookahead_looks_ahead() -> None:

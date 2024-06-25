@@ -1,6 +1,6 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.strings.char import char
-from functional_parsing_library.strings.char_does_not_match import char_does_not_match
+from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library.strings.modules.char_does_not_match import char_does_not_match
 
 
 def test_parser_matches_stuff_not_matching_parser() -> None:

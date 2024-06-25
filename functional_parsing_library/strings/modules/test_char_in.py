@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
-from functional_parsing_library.strings.char_in import char_in
+from functional_parsing_library.strings.modules.char_in import char_in
 
 
 def test_char_in_fails_on_no_characters_specified() -> None:

@@ -1,7 +1,7 @@
 import string
 
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
-from functional_parsing_library.strings.digit import digit
+from functional_parsing_library.strings.modules.digit import digit
 
 
 def test_that_digit_does_not_parse_letters() -> None:

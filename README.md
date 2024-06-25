@@ -21,11 +21,14 @@ and `q` for objects of type `T` and `S`, then `f * p & q` will first try to matc
 and match `q`, and finally it will apply `f`.
 
 Another feature of this library is its type safety. Running mypy on
+
 ```python
-from functional_parsing_library.strings.word import word
+from functional_parsing_library.strings.modules.word import word
+
 
 def add_strings(one: str, two: str, three: str) -> int:
     return len(one + two + three)
+
 
 reveal_type(add_strings * word('hi'))
 reveal_type(add_strings * word('hi') & word('hi'))

@@ -5,8 +5,8 @@ import pytest
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
 from functional_parsing_library.parser import Parser
 from functional_parsing_library.recursive_parser import Bracketed, RecursiveParser
-from functional_parsing_library.strings.char import char
-from functional_parsing_library.strings.digit import digit
+from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library.strings.modules.digit import digit
 
 
 @pytest.fixture

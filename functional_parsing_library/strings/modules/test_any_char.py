@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
-from functional_parsing_library.strings.any_char import any_char
+from functional_parsing_library.strings.modules.any_char import any_char
 
 
 def test_that_any_char_fails_on_empty_string() -> None:
