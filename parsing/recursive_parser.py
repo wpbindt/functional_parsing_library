@@ -2,6 +2,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Generic
 
+import pytest
+
 from asserts import assert_parsing_succeeds, assert_parsing_fails
 from parsing.strings.char import char
 from parsing.strings.digit import digit
@@ -34,30 +36,33 @@ class RecursiveParser(Generic[T]):
         return self._parser(to_parse)
 
 
-open = char('(')
-close = char(')')
+@pytest.fixture
+def parser() -> Parser[Bracketed | int]:
+    open = char('(')
+    close = char(')')
 
-bracketed: RecursiveParser[Bracketed] = RecursiveParser()
+    bracketed: RecursiveParser[Bracketed] = RecursiveParser()
 
-recursive_lang = digit | bracketed.parser
-bracketed.parser = Bracketed * ((open > recursive_lang) < close)
-
-
-def test_digit_is_parsed() -> None:
-    assert_parsing_succeeds(recursive_lang, '3').with_result(3)
-
-
-def test_we_can_do_parens() -> None:
-    assert_parsing_succeeds(recursive_lang, '(3)').with_result(Bracketed(3))
+    recursive_lang = digit | bracketed.parser
+    bracketed.parser = Bracketed * ((open > recursive_lang) < close)
+    return recursive_lang
 
 
-def test_we_can_do_two_parens() -> None:
-    assert_parsing_succeeds(recursive_lang, '((3))').with_result(Bracketed(Bracketed(3)))
+def test_digit_is_parsed(parser: Parser[Bracketed | int]) -> None:
+    assert_parsing_succeeds(parser, '3').with_result(3)
 
 
-def test_parens_must_close() -> None:
-    assert_parsing_fails(recursive_lang, '((3)')
+def test_we_can_do_parens(parser: Parser[Bracketed | int]) -> None:
+    assert_parsing_succeeds(parser, '(3)').with_result(Bracketed(3))
 
 
-def test_we_can_do_many() -> None:
-    assert_parsing_succeeds(recursive_lang, '((((3))))')
+def test_we_can_do_two_parens(parser: Parser[Bracketed | int]) -> None:
+    assert_parsing_succeeds(parser, '((3))').with_result(Bracketed(Bracketed(3)))
+
+
+def test_parens_must_close(parser: Parser[Bracketed | int]) -> None:
+    assert_parsing_fails(parser, '((3)')
+
+
+def test_we_can_do_many(parser: Parser[Bracketed | int]) -> None:
+    assert_parsing_succeeds(parser, '((((3))))')
