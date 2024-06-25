@@ -36,7 +36,7 @@ class Parser(Generic[T]):
         return self._parser_function(to_parse)
 
     def __or__(self, other: Parser[S]) -> Parser[T | S]:
-        from parsing.combinators.parse_or import or_2
+        from functional_parsing_library.combinators.parse_or import or_2
         return or_2(parser_1=self, parser_2=other)
 
     @overload
@@ -48,15 +48,15 @@ class Parser(Generic[T]):
         pass
 
     def __rmul__(self, other):
-        from parsing.fmap import fmap
+        from functional_parsing_library.fmap import fmap
         return fmap(function=other, parser=self)
 
     def __gt__(self, other: Parser[S]) -> Parser[S]:
-        from parsing.combinators.ignore_left import ignore_left
+        from functional_parsing_library.combinators.ignore_left import ignore_left
         return ignore_left(left=self, right=other)
 
     def __lt__(self, other: Parser[S]) -> Parser[T]:
-        from parsing.combinators.ignore_right import ignore_right
+        from functional_parsing_library.combinators.ignore_right import ignore_right
         return ignore_right(left=self, right=other)
 
     @overload
@@ -68,7 +68,7 @@ class Parser(Generic[T]):
         pass
 
     def __rand__(self, other):
-        from parsing.combinators.parse_and import new_and
+        from functional_parsing_library.combinators.parse_and import new_and
         return new_and(left=other, right=self)
 
 

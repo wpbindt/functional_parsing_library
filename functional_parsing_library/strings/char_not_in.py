@@ -1,9 +1,9 @@
 from collections.abc import Container
 
-from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.parser import Parser
-from parsing.strings.char_does_not_match import char_does_not_match
-from parsing.strings.char_in import char_in
+from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
+from functional_parsing_library.parser import Parser
+from functional_parsing_library.strings.char_does_not_match import char_does_not_match
+from functional_parsing_library.strings.char_in import char_in
 
 
 def char_not_in(characters: Container[str]) -> Parser[str]:

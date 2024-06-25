@@ -1,10 +1,10 @@
 from typing import Any
 
-from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.combinators.many import some
-from parsing.parser import Parser, T
-from parsing.strings.char import char
-from parsing.strings.word import word
+from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
+from functional_parsing_library.combinators.many import some
+from functional_parsing_library.parser import Parser, T
+from functional_parsing_library.strings.char import char
+from functional_parsing_library.strings.word import word
 
 
 def separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:

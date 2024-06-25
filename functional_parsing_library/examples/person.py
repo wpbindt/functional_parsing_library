@@ -2,12 +2,12 @@ import string
 from enum import auto, Enum
 from typing import Callable, Any
 
-from asserts import assert_parsing_succeeds
-from parsing.combinators.many import many
-from parsing.parser import S
-from parsing.strings.char import char
-from parsing.strings.char_in import char_in
-from parsing.strings.word import word
+from functional_parsing_library.asserts import assert_parsing_succeeds
+from functional_parsing_library.combinators.many import many
+from functional_parsing_library.parser import S
+from functional_parsing_library.strings.char import char
+from functional_parsing_library.strings.char_in import char_in
+from functional_parsing_library.strings.word import word
 
 
 class Honorific(Enum):

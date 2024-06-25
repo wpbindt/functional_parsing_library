@@ -1,7 +1,7 @@
 import functools
 from typing import Callable
 
-from parsing.parser import CouldNotParse, ParseResults, U
+from functional_parsing_library.parser import CouldNotParse, ParseResults, U
 
 
 def check_for_empty_string(

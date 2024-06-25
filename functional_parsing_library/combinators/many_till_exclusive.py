@@ -1,8 +1,8 @@
-from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.combinators.lookahead import lookahead
-from parsing.combinators.many import many
-from parsing.parser import Parser, U, S
-from parsing.strings.word import word
+from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
+from functional_parsing_library.combinators.lookahead import lookahead
+from functional_parsing_library.combinators.many import many
+from functional_parsing_library.parser import Parser, U, S
+from functional_parsing_library.strings.word import word
 
 
 def many_till_exclusive(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:

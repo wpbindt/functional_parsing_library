@@ -1,8 +1,8 @@
 from typing import cast
 
-from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.parser import Parser, S, U, ParseResults, CouldNotParse
-from parsing.strings.word import word
+from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
+from functional_parsing_library.parser import Parser, S, U, ParseResults, CouldNotParse
+from functional_parsing_library.strings.word import word
 
 
 def lookahead(parser: Parser[S], look_for: Parser[U]) -> Parser[S]:

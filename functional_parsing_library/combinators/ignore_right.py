@@ -1,6 +1,6 @@
-from asserts import assert_parsing_succeeds
-from parsing.parser import Parser, S, T
-from parsing.strings.word import word
+from functional_parsing_library.asserts import assert_parsing_succeeds
+from functional_parsing_library.parser import Parser, S, T
+from functional_parsing_library.strings.word import word
 
 
 def ignore_right(left: Parser[T], right: Parser[S]) -> Parser[T]:

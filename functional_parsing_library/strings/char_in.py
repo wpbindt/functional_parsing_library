@@ -1,9 +1,9 @@
 from collections.abc import Container
 
-from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.check_for_empty_string import check_for_empty_string
-from parsing.parser import Parser, ParseResults, CouldNotParse
-from parsing.strings.pop_one_character import pop_one_character
+from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
+from functional_parsing_library.check_for_empty_string import check_for_empty_string
+from functional_parsing_library.parser import Parser, ParseResults, CouldNotParse
+from functional_parsing_library.strings.pop_one_character import pop_one_character
 
 
 def char_in(string: Container[str]) -> Parser[str]:

@@ -1,8 +1,8 @@
 from typing import TypeVarTuple, Callable, overload, TypeVar
 
-from asserts import assert_parsing_succeeds
-from parsing.parser import Parser, S, T, ParseResults, CouldNotParse, MappedParser
-from parsing.strings.char import char
+from functional_parsing_library.asserts import assert_parsing_succeeds
+from functional_parsing_library.parser import Parser, S, T, ParseResults, CouldNotParse, MappedParser
+from functional_parsing_library.strings.char import char
 
 Ts = TypeVarTuple('Ts')
 

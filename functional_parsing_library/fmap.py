@@ -1,9 +1,9 @@
 from inspect import signature
 from typing import Callable, TypeVarTuple, overload, TypeVar, TypeGuard
 
-from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.parser import Parser, T, S, ParseResults, CouldNotParse, MappedParser
-from parsing.strings.char import char
+from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
+from functional_parsing_library.parser import Parser, T, S, ParseResults, CouldNotParse, MappedParser
+from functional_parsing_library.strings.char import char
 
 Ts = TypeVarTuple('Ts')
 U = TypeVar('U')

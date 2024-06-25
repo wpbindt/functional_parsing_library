@@ -1,6 +1,6 @@
-from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.parser import Parser, T, ParseResults, CouldNotParse
-from parsing.strings.char import char
+from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
+from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotParse
+from functional_parsing_library.strings.char import char
 
 
 def some(parser: Parser[T]) -> Parser[list[T]]:

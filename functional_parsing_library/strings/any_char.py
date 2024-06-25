@@ -1,7 +1,7 @@
-from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.check_for_empty_string import check_for_empty_string
-from parsing.parser import CouldNotParse, Parser, ParseResults
-from parsing.strings.pop_one_character import pop_one_character
+from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
+from functional_parsing_library.check_for_empty_string import check_for_empty_string
+from functional_parsing_library.parser import CouldNotParse, Parser, ParseResults
+from functional_parsing_library.strings.pop_one_character import pop_one_character
 
 
 @check_for_empty_string

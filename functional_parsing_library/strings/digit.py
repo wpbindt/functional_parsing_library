@@ -1,8 +1,8 @@
 import string
 
-from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.fmap import to_int
-from parsing.strings.char_in import char_in
+from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
+from functional_parsing_library.fmap import to_int
+from functional_parsing_library.strings.char_in import char_in
 
 
 digit = to_int * char_in(string.digits)

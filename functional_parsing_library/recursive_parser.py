@@ -4,10 +4,10 @@ from typing import Generic
 
 import pytest
 
-from asserts import assert_parsing_succeeds, assert_parsing_fails
-from parsing.strings.char import char
-from parsing.strings.digit import digit
-from parsing.parser import Parser, T, ParseResults, CouldNotParse
+from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
+from functional_parsing_library.strings.char import char
+from functional_parsing_library.strings.digit import digit
+from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotParse
 
 
 @dataclass(frozen=True)

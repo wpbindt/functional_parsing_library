@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Generic, Self
 
-from parsing.parser import Parser, S, CouldNotParse, ParseResults, FailureReason
+from functional_parsing_library.parser import Parser, S, CouldNotParse, ParseResults, FailureReason
 
 
 class _ParsingSuccessTestResult(Generic[S]):

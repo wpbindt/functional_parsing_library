@@ -1,14 +1,14 @@
 import string
 from typing import Any
 
-from asserts import assert_parsing_succeeds
-from parsing.combinators.many import many
-from parsing.combinators.separated_by import some_separated_by
-from parsing.integer.integer import integer
-from parsing.recursive_parser import RecursiveParser
-from parsing.strings.char import char
-from parsing.strings.char_in import char_in
-from parsing.strings.word import word
+from functional_parsing_library.asserts import assert_parsing_succeeds
+from functional_parsing_library.combinators.many import many
+from functional_parsing_library.combinators.separated_by import some_separated_by
+from functional_parsing_library.integer.integer import integer
+from functional_parsing_library.recursive_parser import RecursiveParser
+from functional_parsing_library.strings.char import char
+from functional_parsing_library.strings.char_in import char_in
+from functional_parsing_library.strings.word import word
 
 
 valid_json_string_chars = string.ascii_letters + 'idk'

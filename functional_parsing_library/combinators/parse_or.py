@@ -1,6 +1,6 @@
-from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.strings.char import char
-from parsing.parser import Parser, T, S, ParseResults, CouldNotParse
+from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
+from functional_parsing_library.strings.char import char
+from functional_parsing_library.parser import Parser, T, S, ParseResults, CouldNotParse
 
 
 def or_2(parser_1: Parser[T], parser_2: Parser[S]) -> Parser[T | S]:

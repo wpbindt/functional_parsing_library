@@ -1,5 +1,5 @@
-from asserts import assert_parsing_fails, assert_parsing_succeeds
-from parsing.parser import Parser, ParseResults, CouldNotParse
+from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
+from functional_parsing_library.parser import Parser, ParseResults, CouldNotParse
 
 
 def word(word_to_parse_for: str) -> Parser[str]:

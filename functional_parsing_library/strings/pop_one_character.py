@@ -1,4 +1,4 @@
-from parsing.parser import ParseResults
+from functional_parsing_library.parser import ParseResults
 
 
 def pop_one_character(string: str) -> ParseResults[str]:
