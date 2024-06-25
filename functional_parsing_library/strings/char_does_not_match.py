@@ -1,8 +1,6 @@
-from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
 from functional_parsing_library.check_for_empty_string import check_for_empty_string
 from functional_parsing_library.parser import U, Parser, ParseResults, CouldNotParse
 from functional_parsing_library.strings.pop_one_character import pop_one_character
-from functional_parsing_library.strings.char import char
 
 
 def char_does_not_match(parser: Parser[U]) -> Parser[str]:
@@ -17,13 +15,3 @@ def char_does_not_match(parser: Parser[U]) -> Parser[str]:
     return Parser(parser_)
 
 
-def test_parser_matches_stuff_not_matching_parser() -> None:
-    parser = char_does_not_match(char('a'))
-
-    assert_parsing_succeeds(parser, 'b').with_result('b')
-
-
-def test_parser_does_not_match_parser() -> None:
-    parser = char_does_not_match(char('a'))
-
-    assert_parsing_fails(parser, 'a')

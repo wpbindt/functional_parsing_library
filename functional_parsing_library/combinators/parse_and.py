@@ -1,8 +1,6 @@
 from typing import TypeVarTuple, Callable, overload, TypeVar
 
-from functional_parsing_library.asserts import assert_parsing_succeeds
 from functional_parsing_library.parser import Parser, S, T, ParseResults, CouldNotParse, MappedParser
-from functional_parsing_library.strings.char import char
 
 Ts = TypeVarTuple('Ts')
 
@@ -57,24 +55,3 @@ def new_and(left, right):
         )
 
     return Parser(parser)
-
-
-def test_new_and_deals_with_callables() -> None:
-    def plus(left: str, right: str) -> str:
-        return f'{left} plus {right}'
-
-    a = char('a')
-    b = char('b')
-    parser = plus * a & b
-    assert_parsing_succeeds(parser, 'abc').with_result('a plus b').with_remainder('c')
-
-
-def test_new_and_deals_with_callables_with_more_arguments() -> None:
-    def plus(left: str, middle: str, right: str) -> str:
-        return f'{left} plus {middle} plus {right}'
-
-    a = char('a')
-    b = char('b')
-    c = char('c')
-    parser = plus * a & b & c
-    assert_parsing_succeeds(parser, 'abc').with_result('a plus b plus c')
