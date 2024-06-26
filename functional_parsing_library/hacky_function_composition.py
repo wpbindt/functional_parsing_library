@@ -24,5 +24,3 @@ class _LeftAppliedComposer(Generic[T, S]):
 
 
 o = _Composer()
-
-
