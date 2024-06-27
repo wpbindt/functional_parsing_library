@@ -68,8 +68,8 @@ class Parser(Generic[T]):
         pass
 
     def __rand__(self, other):
-        from functional_parsing_library.combinators.parse_and import new_and
-        return new_and(left=other, right=self)
+        from functional_parsing_library.combinators.parse_and import parse_and
+        return parse_and(left=other, right=self)
 
 
 class MappedParser(Parser[Callable[[*Ts], S]], Generic[S, *Ts]):

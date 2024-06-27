@@ -9,16 +9,16 @@ U = TypeVar('U')
 
 
 @overload
-def new_and(left: MappedParser[S, T], right: Parser[T]) -> Parser[S]:
+def parse_and(left: MappedParser[S, T], right: Parser[T]) -> Parser[S]:
     pass
 
 
 @overload
-def new_and(left: MappedParser[S, T, U, *Ts], right: Parser[T]) -> MappedParser[S, U, *Ts]:
+def parse_and(left: MappedParser[S, T, U, *Ts], right: Parser[T]) -> MappedParser[S, U, *Ts]:
     pass
 
 
-def new_and(left, right):
+def parse_and(left, right):
     if left.is_multi_arg:
         def parser_(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
             left_result = left(to_parse)
