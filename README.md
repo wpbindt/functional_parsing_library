@@ -49,7 +49,6 @@ will raise a `TypeError`, and mypy will catch this.
 ### Documentation
 To see some documentation, clone this repo, run
 ```bash
-make image
 make serve-documentation
 ```
 and in your browser you can peruse this library's docstrings at port 8000.
