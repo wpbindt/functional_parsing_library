@@ -1,5 +1,4 @@
 build==1.2.1
-flake8==7.0.0
 mypy==1.8.0
 pytest==8.0.1
 twine==5.1.0

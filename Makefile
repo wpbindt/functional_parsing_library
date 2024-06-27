@@ -12,10 +12,6 @@ run-tests:
 mypy:
 	$(DOCKER_RUN) mypy .
 
-.PHONY: flake
-flake:
-	$(DOCKER_RUN) flake8 .
-
 .PHONY: build
 build: image
 	$(DOCKER_RUN) python3 -m build
