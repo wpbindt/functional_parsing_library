@@ -14,6 +14,10 @@ ParsedRecursiveLang = int | Bracketed
 
 
 class RecursiveParser(Generic[T]):
+    """
+    A container for forward references to parsers so as to support parsers for recursive languages, such as the language
+    of expressions of the form (), (3), ((3)), 3, ((())).
+    """
     def __init__(self) -> None:
         self._parser: Parser[T] | None = None
 

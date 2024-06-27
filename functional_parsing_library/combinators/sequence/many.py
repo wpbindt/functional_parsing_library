@@ -2,6 +2,14 @@ from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotP
 
 
 def some(parser: Parser[T]) -> Parser[list[T]]:
+    """
+    Parse at zero or more, and as many as possible, matches for parser. For example,
+    >>> from functional_parsing_library.strings import char
+    >>> some(char('a'))('aaab').result
+    ['a', 'a', 'a']
+    >>> some(char('a'))('b').result
+    []
+    """
     def parser_(to_parse: str) -> ParseResults[list[T]]:
         remainder = to_parse
         result: list[T] = []
@@ -18,4 +26,10 @@ def some(parser: Parser[T]) -> Parser[list[T]]:
 
 
 def many(parser: Parser[T]) -> Parser[list[T]]:
+    """
+    Parse at least one, and as many as possible, matches for parser. For example,
+    >>> from functional_parsing_library.strings import char
+    >>> many(char('a'))('aaab').result
+    ['a', 'a', 'a']
+    """
     return (lambda t, ts: [t, *ts]) * parser & some(parser)
