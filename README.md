@@ -46,6 +46,14 @@ add_strings * word('hi') & word('hi') & word('hi') & word('hi')
 ```
 will raise a `TypeError`, and mypy will catch this.
 
+### Documentation
+To see some documentation, clone this repo, run
+```bash
+make image
+make serve-documentation
+```
+and in your browser you can peruse this library's docstrings at port 8000.
+
 ### Some operator overloading weirdness
 This library overloads the operators `*`, `<`, `>`, and so on to implement parser combinators. Usually this results in more
 readable parsers, but there are some quirks in order of evaluation whiich results in unexpected behavior. For example,
