@@ -45,3 +45,11 @@ or
 add_strings * word('hi') & word('hi') & word('hi') & word('hi')
 ```
 will raise a `TypeError`, and mypy will catch this.
+
+### Some operator overloading weirdness
+This library overloads the operators `*`, `<`, `>`, and so on to implement parser combinators. Usually this results in more
+readable parsers, but there are some quirks in order of evaluation whiich results in unexpected behavior. For example,
+let's take three parsers, `a`, `b`, and `c`, which parse the strings `"a"`, `"b"`, and `"c"`, respectively. Then one would
+expect `a > b < c` to parse `"abc"` to the string `"b"`. This is because `>` parses the left parser and discards the result,
+and proceeds to parse the right parser. Similarly for `<`. However, `a > b < c` produces a failure on `"abc"` with the 
+error message `String "abc" does not start with "b"`. The parser succeeds on `"bca"` with result `"b"` and remainder `"a"`.
