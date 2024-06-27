@@ -1,9 +1,11 @@
-DOCKER_RUN = docker run -u 1000:1000 -v $(CURDIR):/srv parsing_library
-DOCKER_RUN_WITH_EXPOSED_PORT = docker run -u 1000:1000 -p 8000:8000 -v $(CURDIR):/srv parsing_library
+IMAGE = parsing_library
+DOCKER_RUN_PREFIX = docker run -u 1000:1000 -v $(CURDIR):/srv
+DOCKER_RUN = $(DOCKER_RUN_PREFIX) $(IMAGE)
+DOCKER_RUN_WITH_EXPOSED_PORT = $(DOCKER_RUN_PREFIX) -p 8000:8000 $(IMAGE)
 
 .PHONY: image
 image:
-	docker build -t parsing_library .
+	docker build -t $(IMAGE) .
 
 .PHONY: run-tests
 run-tests:
