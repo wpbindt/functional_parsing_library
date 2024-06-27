@@ -60,3 +60,10 @@ let's take three parsers, `a`, `b`, and `c`, which parse the strings `"a"`, `"b"
 expect `a > b < c` to parse `"abc"` to the string `"b"`. This is because `>` parses the left parser and discards the result,
 and proceeds to parse the right parser. Similarly for `<`. However, `a > b < c` produces a failure on `"abc"` with the 
 error message `String "abc" does not start with "b"`. The parser succeeds on `"bca"` with result `"b"` and remainder `"a"`.
+
+### TODO list
+- Hide `ParseResults` and `CouldNotParse` by supporting some function `parse` of type `Callable[[Parser[T], str], T]`
+which raises on `CouldNotParse` or a non-empty remainder. Decouples `ParseResults` from casual clients.
+- Backport to earlier Python versions, say 3.9 and up.
+- Ambiguity in parsing, for example `char('a') | word('ab')` should parse `"ab"` as both `"a"` with remainder `"b"` and as `"ab"` with no remainder.
+- Endow the parsers with a monadic structure. Probably context managers can be used to craft some makeshift Haskell-like `do` notation.
