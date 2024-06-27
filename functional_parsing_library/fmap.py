@@ -43,6 +43,15 @@ def fmap(
     function,
     parser,
 ):
+    """
+    Used to map over parsers. The `*` operator is overloaded to call this function. Given a parser `p` of type
+    `Parser[T]` and a callable `f` of type `Callable[[T], S]`, the parser `f * p` will parse using `p`, and then
+    apply `f` to the result, resulting in an object of type S. For example,
+    >>> from functional_parsing_library.strings import char
+    >>> parser = (lambda x: x + 'b') * char('a')
+    >>> parser('a').result
+    'ab'
+    """
     if accepts_single_argument(function):
         def parser_(to_parse: str) -> ParseResults[S] | CouldNotParse:
             result = parser(to_parse)

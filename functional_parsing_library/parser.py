@@ -29,6 +29,13 @@ class CouldNotParse:
 
 
 class Parser(Generic[T]):
+    """
+    This class is a wrapper for functions of signature `str -> ParseResults[T] | CouldNotParse` (i.e., parsers), and
+    is used to overload the operators *, |, &, <, and > to make them call various parser combinators. If you wish to
+    implement a parser which cannot be implemented by combining parsers found in this library, you implement a function
+    `f` of signature `str -> ParseResults[T] | CouldNotParse`, and wrap it like so: `parser = Parser(f)`. Now your
+    parser is ready for use and combination with other parsers.
+    """
     def __init__(self, parser_function: Callable[[str], ParseResults[T] | CouldNotParse]) -> None:
         self._parser_function = parser_function
 

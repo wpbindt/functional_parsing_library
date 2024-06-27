@@ -19,6 +19,30 @@ def parse_and(left: MappedParser[S, T, U, *Ts], right: Parser[T]) -> MappedParse
 
 
 def parse_and(left, right):
+    """
+    Is used to combine parsers p and q to a parser which first parses using p and then the remainder using q. The `&`
+    operator is overloaded to make use of this function.
+
+    If p is of type Parser[T] and q is of type Parser[S], then it is not obvious what type p & q should have. For example,
+    it could be of type Parser[tuple[T, S]], it could be of type Parser[list[T | S]], and so on. Therefore, `&` can only
+    be used in combination with a callable f of type `Callable[[T, S], U]` which specifies how to combine the result of
+    p with the result of q. Writing `p & q` without applying such a function will raise a TypeError.
+
+    For example,
+    >>> from functional_parsing_library.strings import char
+    >>> a, b = char('a'), char('b')
+    >>> plus = lambda x, y: x + ' and ' + y
+    >>> parser = plus * a & b
+    >>> parser('ab').result
+    'a and b'
+
+    This works with callables of more than two arguments as well:
+    >>> c = char('c')
+    >>> triple_plus = lambda x, y, z: x + y + z
+    >>> parser = triple_plus * a & b & c
+    >>> parser('abc').result
+    'abc'
+    """
     if left.is_multi_arg:
         def parser_(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
             left_result = left(to_parse)
