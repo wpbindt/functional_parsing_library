@@ -5,14 +5,6 @@ from typing import Generic
 from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotParse
 
 
-@dataclass(frozen=True)
-class Bracketed:
-    content: Bracketed | int
-
-
-ParsedRecursiveLang = int | Bracketed
-
-
 class RecursiveParser(Generic[T]):
     """
     A container for forward references to parsers so as to support parsers for recursive languages, such as the language

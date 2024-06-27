@@ -1,12 +1,18 @@
 from __future__ import annotations
+from dataclasses import dataclass
 
 import pytest
 
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
 from functional_parsing_library.parser import Parser
-from functional_parsing_library.recursive_parser import Bracketed, RecursiveParser
+from functional_parsing_library.recursive_parser import RecursiveParser
 from functional_parsing_library.strings.modules.char import char
 from functional_parsing_library.strings.modules.digit import digit
+
+
+@dataclass(frozen=True)
+class Bracketed:
+    content: Bracketed | int
 
 
 @pytest.fixture
@@ -39,3 +45,6 @@ def test_parens_must_close(parser: Parser[Bracketed | int]) -> None:
 
 def test_we_can_do_many(parser: Parser[Bracketed | int]) -> None:
     assert_parsing_succeeds(parser, '((((3))))')
+
+
+ParsedRecursiveLang = int | Bracketed
