@@ -19,3 +19,6 @@ classifiers = [
 [tool.pytest.ini_options]
 python_files = "*"
 addopts = "--doctest-modules"
+
+[tool.ruff.lint]
+select = ["W", "F"]
