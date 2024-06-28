@@ -1,11 +1,3 @@
-from functional_parsing_library.check_for_empty_string import check_for_empty_string
-from functional_parsing_library.parser import CouldNotParse, Parser, ParseResults
-from functional_parsing_library.strings.modules.pop_one_character import pop_one_character
+from functional_parsing_library.strings.modules.char_satisfies import char_satisfies
 
-
-@check_for_empty_string
-def _any_char(to_parse: str) -> ParseResults[str] | CouldNotParse:
-    return pop_one_character(to_parse)
-
-
-any_char = Parser(_any_char)
+any_char = char_satisfies(lambda c: True)
