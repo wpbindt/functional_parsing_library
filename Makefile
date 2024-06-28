@@ -27,6 +27,10 @@ documentation: clean
 serve-documentation: documentation
 	$(DOCKER_RUN_WITH_EXPOSED_PORT) python -m http.server 8000 --directory html/functional_parsing_library
 
+.PHONY: ruff
+ruff:
+	$(DOCKER_RUN) ruff check .
+
 .PHONY: clean
 clean: image
 	$(DOCKER_RUN) rm -rf dist functional_parsing_library.egg-info html

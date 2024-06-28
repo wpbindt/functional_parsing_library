@@ -24,6 +24,9 @@ jobs:
     - name: Run mypy
       run: make mypy
 
+    - name: Ruff
+      run: make ruff
+
   deploy:
     needs: test
     if: github.ref_type == 'tag'
