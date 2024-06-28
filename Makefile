@@ -34,3 +34,6 @@ ruff:
 .PHONY: clean
 clean: image
 	$(DOCKER_RUN) rm -rf dist functional_parsing_library.egg-info html
+
+.PHONY: all-checks
+all-checks: ruff mypy run-tests
