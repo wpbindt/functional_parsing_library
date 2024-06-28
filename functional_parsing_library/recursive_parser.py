@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+
 from typing import Generic
 
 from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotParse
