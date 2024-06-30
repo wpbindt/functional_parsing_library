@@ -47,35 +47,40 @@ def parse_and(
     'abc'
     """
     if left.is_multi_arg:
-        def parser_(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
-            left_result = left(to_parse)
-            if isinstance(left_result, CouldNotParse):
-                return left_result
+        multi_arg_left = cast(MappedParser[S, T, U, *Ts], left)
+        return _parse_and_for_multiple_arguments(multi_arg_left, right)
 
-            parsed_function = left_result.result
-            remainder = left_result.remainder
-            right_result = right(remainder)
-            if isinstance(right_result, CouldNotParse):
-                return right_result
+    single_arg_left = cast(MappedParser[S, T], left)
+    return _parse_and_for_single_argument(single_arg_left, right)
 
-            return ParseResults(
-                result=lambda *ts: parsed_function(right_result.result, *ts),
-                remainder=right_result.remainder
-            )
 
-        return MappedParser(parser_)
+def _parse_and_for_multiple_arguments(
+    left: MappedParser[S, T, U, *Ts],
+    right: Parser[T],
+) -> MappedParser[S, U, *Ts]:
+    def parser_(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
+        result = _parse_left_and_then_right(left, right, to_parse)
+        if isinstance(result, CouldNotParse):
+            return result
+        right_result, parsed_function = result
 
-    left_ = cast(MappedParser[S, T], left)
+        return ParseResults(
+            result=lambda *ts: parsed_function(right_result.result, *ts),
+            remainder=right_result.remainder
+        )
+
+    return MappedParser(parser_)
+
+
+def _parse_and_for_single_argument(
+    left: MappedParser[S, T],
+    right: Parser[T],
+) -> Parser[S]:
     def parser(to_parse: str) -> ParseResults[S] | CouldNotParse:
-        left_result = left_(to_parse)
-        if isinstance(left_result, CouldNotParse):
-            return left_result
-
-        parsed_function = left_result.result
-        remainder = left_result.remainder
-        right_result = right(remainder)
-        if isinstance(right_result, CouldNotParse):
-            return right_result
+        result = _parse_left_and_then_right(left, right, to_parse)
+        if isinstance(result, CouldNotParse):
+            return result
+        right_result, parsed_function = result
 
         return ParseResults(
             result=parsed_function(right_result.result),
@@ -83,3 +88,19 @@ def parse_and(
         )
 
     return Parser(parser)
+
+
+def _parse_left_and_then_right(
+    left: MappedParser[S, T, *Ts],
+    right: Parser[T],
+    to_parse: str
+) -> tuple[ParseResults[T], Callable[[T, *Ts], S]] | CouldNotParse:
+    left_result = left(to_parse)
+    if isinstance(left_result, CouldNotParse):
+        return left_result
+
+    right_result = right(left_result.remainder)
+    if isinstance(right_result, CouldNotParse):
+        return right_result
+
+    return right_result, left_result.result
