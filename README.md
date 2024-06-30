@@ -67,3 +67,20 @@ which raises on `CouldNotParse` or a non-empty remainder. Decouples `ParseResult
 - Backport to earlier Python versions, say 3.9 and up.
 - Ambiguity in parsing, for example `char('a') | word('ab')` should parse `"ab"` as both `"a"` with remainder `"b"` and as `"ab"` with no remainder.
 - Endow the parsers with a monadic structure. Probably context managers can be used to craft some makeshift Haskell-like `do` notation.
+
+
+### Internal mypy error
+The following snippet results in an internal mypy error:
+```python
+from functional_parsing_library.combinators.maybe import maybe
+from functional_parsing_library.integer.integer import integer
+
+
+def transform_none(integer: int, *maybe_int: int | None) -> int:
+    if maybe_int[0] is None:
+        return 0
+    return maybe_int[0] + integer
+
+
+transform_none * integer & maybe(integer) & maybe(integer)
+```

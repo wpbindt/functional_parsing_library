@@ -13,7 +13,7 @@ run-tests:
 
 .PHONY: mypy
 mypy:
-	$(DOCKER_RUN) mypy .
+	$(DOCKER_RUN) mypy --show-traceback .
 
 .PHONY: build
 build: image
