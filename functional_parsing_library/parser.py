@@ -54,7 +54,7 @@ class Parser(Generic[T]):
     def __rmul__(self, other: Callable[[T], S]) -> Parser[S]:
         pass
 
-    def __rmul__(self, other):
+    def __rmul__(self, other: Callable[[T, U, *Ts], S] | Callable[[T], S]) -> MappedParser[S, U, *Ts] | Parser[S]:
         from functional_parsing_library.fmap import fmap
         return fmap(function=other, parser=self)
 
@@ -74,7 +74,7 @@ class Parser(Generic[T]):
     def __rand__(self, other: MappedParser[S, T, U, *Ts]) -> MappedParser[S, U, *Ts]:
         pass
 
-    def __rand__(self, other):
+    def __rand__(self, other: MappedParser[S, T] | MappedParser[S, T, U, *Ts]) -> Parser[S] | MappedParser[S, U, *Ts]:
         from functional_parsing_library.combinators.parse_and import parse_and
         return parse_and(left=other, right=self)
 
