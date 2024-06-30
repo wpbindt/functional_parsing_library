@@ -23,7 +23,7 @@ def accepts_single_argument(
     return number_of_arguments(function) == 1
 
 
-def accept_many_arguments(
+def accepts_many_arguments(
     function: Callable[[T, U, *Ts], S] | Callable[[T], S],
 ) -> TypeGuard[Callable[[T, U, *Ts], S]]:
     return not accepts_single_argument(function)
@@ -53,31 +53,45 @@ def fmap(
     'ab'
     """
     if accepts_single_argument(function):
-        def parser_(to_parse: str) -> ParseResults[S] | CouldNotParse:
-            result = parser(to_parse)
-            if isinstance(result, CouldNotParse):
-                return result
-            return ParseResults(
-                result=function(result.result),
-                remainder=result.remainder
-            )
-        return Parser(parser_)
+        return _fmap_for_one_argument(function, parser)
 
-    if accept_many_arguments(function):
-        def parser_1(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
-            result = parser(to_parse)
-            if isinstance(result, CouldNotParse):
-                return result
-            return ParseResults(
-                result=lambda u, *ts: function(result.result, u, *ts),
-                remainder=result.remainder
-            )
-
-        if number_of_arguments(function) > 2:
-            p: MappedParser[S, U, *Ts] = MappedParser(parser_1)
-            p.is_multi_arg = True
-            return p
-        else:
-            return MappedParser(parser_1)
+    if accepts_many_arguments(function):
+        return _fmap_for_multiple_arguments(function, parser)
 
     raise Exception('Function should accept either one or many arguments')
+
+
+def _fmap_for_one_argument(
+    function: Callable[[T], S],
+    parser: Parser[T],
+) -> Parser[S]:
+    def mapped_parser(to_parse: str) -> ParseResults[S] | CouldNotParse:
+        result = parser(to_parse)
+        if isinstance(result, CouldNotParse):
+            return result
+        return ParseResults(
+            result=function(result.result),
+            remainder=result.remainder
+        )
+
+    return Parser(mapped_parser)
+
+
+def _fmap_for_multiple_arguments(
+    function: Callable[[T, U, *Ts], S],
+    parser: Parser[T],
+) -> MappedParser[S, U, *Ts]:
+    def mapped_parser(to_parse: str) -> ParseResults[Callable[[U, *Ts], S]] | CouldNotParse:
+        result = parser(to_parse)
+        if isinstance(result, CouldNotParse):
+            return result
+        return ParseResults(
+            result=lambda u, *ts: function(result.result, u, *ts),
+            remainder=result.remainder
+        )
+
+    p: MappedParser[S, U, *Ts] = MappedParser(mapped_parser)
+    if number_of_arguments(function) > 2:
+        p.is_multi_arg = True
+
+    return p
