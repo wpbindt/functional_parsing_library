@@ -40,9 +40,9 @@ def fmap(function: Callable[[T, U, *Ts], S], parser: Parser[T]) -> MappedParser[
 
 
 def fmap(
-    function,
-    parser,
-):
+    function: Callable[[T], S] | Callable[[T, U, *Ts], S],
+    parser: Parser[T],
+) -> Parser[S] | MappedParser[S, U, *Ts]:
     """
     Used to map over parsers. The `*` operator is overloaded to call this function. Given a parser `p` of type
     `Parser[T]` and a callable `f` of type `Callable[[T], S]`, the parser `f * p` will parse using `p`, and then
@@ -74,7 +74,7 @@ def fmap(
             )
 
         if number_of_arguments(function) > 2:
-            p = MappedParser(parser_1)
+            p: MappedParser[S, U, *Ts] = MappedParser(parser_1)
             p.is_multi_arg = True
             return p
         else:
