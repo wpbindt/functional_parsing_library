@@ -1,4 +1,4 @@
-from typing import TypeVarTuple, Callable, overload, TypeVar
+from typing import TypeVarTuple, Callable, overload, TypeVar, cast
 
 from functional_parsing_library.parser import Parser, S, T, ParseResults, CouldNotParse, MappedParser
 
@@ -18,7 +18,10 @@ def parse_and(left: MappedParser[S, T, U, *Ts], right: Parser[T]) -> MappedParse
     pass
 
 
-def parse_and(left, right):
+def parse_and(
+    left: MappedParser[S, T] | MappedParser[S, T, U, *Ts],
+    right: Parser[T],
+) -> Parser[S] | MappedParser[S, U, *Ts]:
     """
     Is used to combine parsers p and q to a parser which first parses using p and then the remainder using q. The `&`
     operator is overloaded to make use of this function.
@@ -62,8 +65,9 @@ def parse_and(left, right):
 
         return MappedParser(parser_)
 
+    left_ = cast(MappedParser[S, T], left)
     def parser(to_parse: str) -> ParseResults[S] | CouldNotParse:
-        left_result = left(to_parse)
+        left_result = left_(to_parse)
         if isinstance(left_result, CouldNotParse):
             return left_result
 
