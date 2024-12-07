@@ -14,6 +14,14 @@ def run_parser(
     to_parse: str,
     raise_on_remainder: bool = False,
 ) -> S:
+    """
+    Utility function for running parsers. On parse errors, instead of an error value CouldNotParse, this function raises
+    an exception. It also unwraps the parse result:
+    >>> from functional_parsing_library.strings import char
+    >>> parser = char('a')
+    >>> run_parser(parser, 'ab')
+    'a'
+    """
     parse_result = parser(to_parse)
 
     if isinstance(parse_result, CouldNotParse):
