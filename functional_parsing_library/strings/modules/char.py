@@ -13,6 +13,10 @@ def char(c: str) -> Parser[str]:
     >>> isinstance(char('a')('bla'), CouldNotParse)
     True
     """
+
+    if len(c) != 1:
+        raise ValueError
+
     return char_satisfies(
         condition=lambda x: x == c,
         reason_factory=lambda to_parse: f'String "{to_parse}" does not start with "{c}"',

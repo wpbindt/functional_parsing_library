@@ -1,3 +1,5 @@
+import pytest
+
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
 from functional_parsing_library.strings.modules.char import char
 
@@ -19,3 +21,13 @@ def test_that_parsing_h_succeeds() -> None:
 def test_that_parsing_h_with_remainder_gives_remainder() -> None:
     h_parser = char('h')
     assert_parsing_succeeds(h_parser, 'hoi').with_remainder('oi')
+
+
+def test_that_char_does_not_accept_long_strings() -> None:
+    with pytest.raises(ValueError):
+        char('ab')
+
+
+def test_that_char_does_not_accept_short_strings() -> None:
+    with pytest.raises(ValueError):
+        char('')
