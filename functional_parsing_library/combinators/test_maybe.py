@@ -4,7 +4,7 @@ from functional_parsing_library.strings import char
 
 
 def test_maybe_parses_like_parser() -> None:
-    assert_parsing_succeeds(maybe(char('a')), 'a').with_result('a')
+    assert_parsing_succeeds(maybe(char('a')), 'a').with_result('a').with_remainder('')
 
 
 def test_maybe_parses_empty_string_as_none() -> None:
