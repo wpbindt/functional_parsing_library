@@ -1,5 +1,5 @@
 from inspect import signature
-from typing import Callable, TypeVarTuple, overload, TypeVar, TypeGuard
+from typing import Callable, TypeVarTuple, overload, TypeVar, TypeGuard, Any
 
 from functional_parsing_library.parser import Parser, T, S, ParseResults, CouldNotParse, MappedParser
 
@@ -11,7 +11,7 @@ def to_int(string: str) -> int:
     return int(string)
 
 
-def _number_of_arguments(function: Callable) -> int:
+def _number_of_arguments(function: Callable[..., Any]) -> int:
     if function in (int, str, float, dict, set, list, tuple, bool):
         return 1
     return len(signature(function).parameters)
