@@ -1,4 +1,4 @@
-from functional_parsing_library.combinators.sequence.some_till_exclusive import some_till_exclusive
+from functional_parsing_library.combinators.sequence.until.some_till_exclusive import some_till_exclusive
 from functional_parsing_library.parser import Parser, U, S
 
 
