@@ -64,7 +64,7 @@ and in your browser you can peruse this library's docstrings at port 8000.
 
 
 ### Internal mypy error
-The following snippet results in an internal mypy error:
+Running with `mypy==1.10.1` and below, the following snippet results in an internal mypy error:
 ```python
 from functional_parsing_library.combinators.maybe import maybe
 from functional_parsing_library.integer.integer import integer
@@ -77,4 +77,12 @@ def transform_none(integer: int, *maybe_int: int | None) -> int:
 
 
 transform_none * integer & maybe(integer) & maybe(integer)
+```
+From `mypy==1.11.0`, the internal error is gone, and results in the following type error:
+```
+error: Unsupported operand types for & ("MappedParser[int, Never, *tuple[Never, ...]]" and "Parser[int | None]")  [operator]
+error: No overload variant of "__rand__" of "Parser" matches argument type "Parser[int]"  [operator]
+note: Possible overload variants:
+note:     def [S] __rand__(self, MappedParser[S, int | None], /) -> Parser[S]
+note:     def [S, U, Ts`1214] __rand__(self, MappedParser[S, int | None, U, *Ts], /) -> MappedParser[S, U, *Ts]
 ```

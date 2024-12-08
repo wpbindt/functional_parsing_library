@@ -1,5 +1,5 @@
 build==1.2.1
-mypy==1.8.0
+mypy==1.13.0
 pytest==8.0.1
 twine==5.1.0
 setuptools==70.1.0
