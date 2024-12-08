@@ -63,26 +63,18 @@ and in your browser you can peruse this library's docstrings at port 8000.
   with the expression `f * p`.
 
 
-### Internal mypy error
-Running with `mypy==1.10.1` and below, the following snippet results in an internal mypy error:
+### Variable number of arguments
+As it stands, mapping over parsers cannot be done with functions accepting a variable number of arguments. For example,
 ```python
-from functional_parsing_library.combinators.maybe import maybe
-from functional_parsing_library.integer.integer import integer
+from functional_parsing_library.strings import any_char
 
+def f(*x: str) -> str:
+    return ''
 
-def transform_none(integer: int, *maybe_int: int | None) -> int:
-    if maybe_int[0] is None:
-        return 0
-    return maybe_int[0] + integer
-
-
-transform_none * integer & maybe(integer) & maybe(integer)
+f * any_char & any_char
 ```
-From `mypy==1.11.0`, the internal error is gone, and results in the following type error:
+results in an internal mypy error for `mypy==1.10.1` and below. From `mypy==1.11.0`, the internal error is gone, and the
+snippet results in the following type error:
 ```
-error: Unsupported operand types for & ("MappedParser[int, Never, *tuple[Never, ...]]" and "Parser[int | None]")  [operator]
-error: No overload variant of "__rand__" of "Parser" matches argument type "Parser[int]"  [operator]
-note: Possible overload variants:
-note:     def [S] __rand__(self, MappedParser[S, int | None], /) -> Parser[S]
-note:     def [S, U, Ts`1214] __rand__(self, MappedParser[S, int | None, U, *Ts], /) -> MappedParser[S, U, *Ts]
+Unsupported operand types for & ("MappedParser[str, Never, *tuple[Never, ...]]" and "Parser[str]")  [operator]
 ```
