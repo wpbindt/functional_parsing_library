@@ -1,4 +1,4 @@
-from functional_parsing_library.combinators.sequence.many import many
+from functional_parsing_library.combinators.sequence.many_till_exclusive import many_till_exclusive
 from functional_parsing_library.parser import Parser, U, S
 
 
@@ -13,4 +13,4 @@ def many_till(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:
     >>> parser('aab').remainder
     ''
     """
-    return many(parser) < until
+    return many_till_exclusive(parser, until) < until

@@ -1,6 +1,11 @@
-from functional_parsing_library.combinators.lookahead import lookahead
-from functional_parsing_library.combinators.sequence.many import many
+from typing import cast
+
+from functional_parsing_library.combinators.sequence.some_till_exclusive import some_till_exclusive
 from functional_parsing_library.parser import Parser, U, S
+
+
+def prepend(element: U, list_: list[U]) -> list[U]:
+    return [element, *list_]
 
 
 def many_till_exclusive(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:
@@ -14,4 +19,8 @@ def many_till_exclusive(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:
     >>> parser('aab').remainder
     'b'
     """
-    return lookahead(many(parser), look_for=until)
+
+    return cast(
+        Parser[list[U]],
+        prepend * parser & some_till_exclusive(parser, until)  # type: ignore
+    )

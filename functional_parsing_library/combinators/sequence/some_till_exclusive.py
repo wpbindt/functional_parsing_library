@@ -1,6 +1,4 @@
-from functional_parsing_library.combinators.lookahead import lookahead
-from functional_parsing_library.combinators.sequence.many import some
-from functional_parsing_library.parser import Parser, U, S
+from functional_parsing_library.parser import Parser, U, S, ParseResults, CouldNotParse
 
 
 def some_till_exclusive(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:
@@ -16,4 +14,17 @@ def some_till_exclusive(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:
     >>> parser('b').result
     []
     """
-    return lookahead(some(parser), look_for=until)
+    def parse_function(to_parse: str) -> ParseResults[list[U]] | CouldNotParse:
+        results: list[U] = []
+        remainder = to_parse
+        while True:
+            delimiter = until(remainder)
+            if not isinstance(delimiter, CouldNotParse):
+                return ParseResults(results, remainder)
+            parse_results = parser(remainder)
+            if isinstance(parse_results, CouldNotParse):
+                return parse_results
+            results.append(parse_results.result)
+            remainder = parse_results.remainder
+
+    return Parser(parse_function)

@@ -1,5 +1,6 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
 from functional_parsing_library.combinators.sequence.many_till import many_till
+from functional_parsing_library.strings import char
 from functional_parsing_library.strings.modules.word import word
 
 
@@ -13,3 +14,7 @@ def test_that_many_till_fails_on_nothing() -> None:
 
 def test_that_many_till_fails_when_lookahead_fails() -> None:
     assert_parsing_fails(many_till(word('a'), word('b')), 'a')
+
+
+def test_that_many_till_stops_when_delimiter_reached_even_when_overlap() -> None:
+    assert_parsing_succeeds(many_till(char('a'), word('ab')), 'aab').with_result(['a'])
