@@ -1,7 +1,9 @@
-from functional_parsing_library.parser import Parser, S, T
+from typing import Any
+
+from functional_parsing_library.parser import Parser, S
 
 
-def ignore_left(left: Parser[T], right: Parser[S]) -> Parser[S]:
+def ignore_left(left: Parser[Any], right: Parser[S]) -> Parser[S]:
     """
     Parses using the left parser, discards the result, and then parses using the right. The `>` operator is overloaded
     to call this function. For example,

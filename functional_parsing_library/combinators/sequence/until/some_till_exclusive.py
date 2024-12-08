@@ -1,7 +1,9 @@
-from functional_parsing_library.parser import Parser, U, S, ParseResults, CouldNotParse
+from typing import Any
+
+from functional_parsing_library.parser import Parser, U, ParseResults, CouldNotParse
 
 
-def some_till_exclusive(parser: Parser[U], until: Parser[S]) -> Parser[list[U]]:
+def some_till_exclusive(parser: Parser[U], until: Parser[Any]) -> Parser[list[U]]:
     """
     Parses zero or more matches for parser, followed by a match for until. Does not consume the match for until.
     For example,
