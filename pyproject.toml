@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "functional_parsing_library"
 readme = "README.md"
-version = "0.0.23"
+version = "0.0.24"
 authors = [
   { name="Wessel Bindt", email="wesselbindt@gmail.com" },
 ]
 description = "A type-safe applicative parsing library"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
