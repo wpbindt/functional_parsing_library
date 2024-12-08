@@ -1,3 +1,4 @@
+from functional_parsing_library.strings.modules.ascii import ascii_letter, ascii_lowercase, ascii_uppercase
 from functional_parsing_library.strings.modules.char import char
 from functional_parsing_library.strings.modules.char_satisfies import char_satisfies
 from functional_parsing_library.strings.modules.word import word
@@ -16,4 +17,7 @@ __all__ = [
     'char_satisfies',
     'digit',
     'word',
+    'ascii_letter',
+    'ascii_lowercase',
+    'ascii_uppercase',
 ]
