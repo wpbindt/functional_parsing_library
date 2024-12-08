@@ -1,4 +1,5 @@
-from functional_parsing_library.parser import Parser, S, U, ParseResults, CouldNotParse
+from functional_parsing_library.combinators import try_parser
+from functional_parsing_library.parser import Parser, S, U
 
 
 def lookahead(parser: Parser[S], look_for: Parser[U]) -> Parser[S]:
@@ -11,13 +12,8 @@ def lookahead(parser: Parser[S], look_for: Parser[U]) -> Parser[S]:
     'a'
     >>> parser('abbb').remainder
     'bbb'
+    >>> from functional_parsing_library.parser import CouldNotParse
     >>> isinstance(parser('a'), CouldNotParse)
     True
     """
-    def parser_(to_parse: str) -> ParseResults[S] | CouldNotParse:
-        result_combined = (parser < look_for)(to_parse)
-        if isinstance(result_combined, CouldNotParse):
-            return result_combined
-        return parser(to_parse)
-
-    return Parser(parser_)
+    return (lambda t, _: t) * parser & try_parser(look_for)
