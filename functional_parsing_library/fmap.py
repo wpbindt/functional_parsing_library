@@ -11,22 +11,22 @@ def to_int(string: str) -> int:
     return int(string)
 
 
-def number_of_arguments(function: Callable) -> int:
+def _number_of_arguments(function: Callable) -> int:
     if function in (int, str, float, dict, set, list, tuple, bool):
         return 1
     return len(signature(function).parameters)
 
 
-def accepts_single_argument(
+def _accepts_single_argument(
     function: Callable[[T, U, *Ts], S] | Callable[[T], S],
 ) -> TypeGuard[Callable[[T], S]]:
-    return number_of_arguments(function) == 1
+    return _number_of_arguments(function) == 1
 
 
-def accepts_many_arguments(
+def _accepts_many_arguments(
     function: Callable[[T, U, *Ts], S] | Callable[[T], S],
 ) -> TypeGuard[Callable[[T, U, *Ts], S]]:
-    return not accepts_single_argument(function)
+    return not _accepts_single_argument(function)
 
 
 @overload
@@ -52,10 +52,10 @@ def fmap(
     >>> parser('a').result
     'ab'
     """
-    if accepts_single_argument(function):
+    if _accepts_single_argument(function):
         return _fmap_for_one_argument(function, parser)
 
-    if accepts_many_arguments(function):
+    if _accepts_many_arguments(function):
         return _fmap_for_multiple_arguments(function, parser)
 
     raise Exception('Function should accept either one or many arguments')
@@ -91,7 +91,7 @@ def _fmap_for_multiple_arguments(
         )
 
     p: MappedParser[S, U, *Ts] = MappedParser(mapped_parser)
-    if number_of_arguments(function) > 2:
+    if _number_of_arguments(function) > 2:
         p.is_multi_arg = True
 
     return p
