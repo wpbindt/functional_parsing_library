@@ -36,3 +36,7 @@ def test_object_with_one_item() -> None:
 
 def test_object_with_two_items() -> None:
     assert_parsing_succeeds(json, '{"a": 3, "b": 4}').with_result({'a': 3, 'b': 4})
+
+
+def test_object_with_object_value() -> None:
+    assert_parsing_succeeds(json, '{"a": {"b": 4}}').with_result({'a': {'b': 4}})
