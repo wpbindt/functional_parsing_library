@@ -57,7 +57,7 @@ and in your browser you can peruse this library's docstrings at port 8000.
 ### TODO list
 - Backport to earlier Python versions, say 3.9 and up.
 - Ambiguity in parsing, for example `char('a') | word('ab')` should parse `"ab"` as both `"a"` with remainder `"b"` and as `"ab"` with no remainder.
-- Endow the parsers with a monadic structure. Probably context managers can be used to craft some makeshift Haskell-like `do` notation.
+- Syntactic sugar for monadic structure of `Parser`. Probably context managers can be used to craft some makeshift Haskell-like `do` notation.
 - The failing tests in the `todos` module.
 - if `p` is a parser for some unbound typevar `U`, and `f` a function from `U` to `Any`, mypy does not deal well 
   with the expression `f * p`.
