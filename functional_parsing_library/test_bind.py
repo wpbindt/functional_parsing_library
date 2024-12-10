@@ -7,22 +7,13 @@ from functional_parsing_library.parser import Parser
 from functional_parsing_library.strings import digit
 
 
-def test_acceptance() -> None:
-    """
-
-    Language to parse:
-    valid input is any string of digits
-    one token consists of a positive single-digit number specifying the length n of the block,
-    followed by n characters forming an n-digit number
-
-    """
+def test_that_bind_can_be_used_to_construct_context_dependent_parsers() -> None:
+    input_ = str(12_3456_71234567)
+    expected_output = [2, 456, 1234567]
 
     def make_block_parser(digits: int) -> Parser[int]:
         return to_int * (''.join * n_times(digits, str * digit))
 
     parser = many(bind(digit, make_block_parser))
-
-    input_ = str(12_3456_71234567)
-    expected_output = [2, 456, 1234567]
 
     assert_parsing_succeeds(parser, input_).with_result(expected_output)
