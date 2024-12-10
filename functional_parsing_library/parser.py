@@ -78,6 +78,10 @@ class Parser(Generic[T]):
         from functional_parsing_library.combinators.parse_and import parse_and
         return parse_and(left=other, right=self)
 
+    def __rshift__(self, other: Callable[[T], Parser[S]]) -> Parser[S]:
+        from functional_parsing_library.bind_parser import bind
+        return bind(self, other)
+
 
 class MappedParser(Parser[Callable[[*Ts], S]], Generic[S, *Ts]):
     """
