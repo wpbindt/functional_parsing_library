@@ -28,6 +28,10 @@ class CouldNotParse:
     reason: FailureReason = NoReasonSpecified()
 
 
+class InvalidParserSyntax(Exception):
+    pass
+
+
 class Parser(Generic[T]):
     """
     This class is a wrapper for functions of signature `str -> ParseResults[T] | CouldNotParse` (i.e., parsers), and
@@ -81,6 +85,23 @@ class Parser(Generic[T]):
     def __rshift__(self, other: Callable[[T], Parser[S]]) -> Parser[S]:
         from functional_parsing_library.bind_parser import bind
         return bind(self, other)
+
+    def __bool__(self) -> bool:
+        """
+        Due to Python implementing comparison chaining so that "a < b < c" evaluates to "a < b and b < c", and because
+        of "x and y" evaluating to y if x is truthy and to x if x is falsy, it's hard to support Parser.__bool__ without
+        causing some weird behavior. Consider the parser
+                char('a') > char('b') < char('c')
+        The expected behavior here is that it parses 'abc' to 'b' (ignore a, keep b, ignore c). But if Parser.__bool__
+        is True, then the above evaluates to
+                char('a') > char('b') and char('b') < char('c'),
+        which in turn evaluates to char('b') < char('c'), which parses 'bc', not 'abc'. As a means of preventing hard to
+        debug situations like this, __bool__ raises an exception, so that statements like
+                char('a') > char('b') < char('c')
+        also raise exceptions, so that you're forced to write something like
+                (char('a') > char('b')) < char('c')
+        """
+        raise InvalidParserSyntax
 
 
 class MappedParser(Parser[Callable[[*Ts], S]], Generic[S, *Ts]):

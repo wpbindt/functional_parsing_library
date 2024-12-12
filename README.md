@@ -60,7 +60,6 @@ and in your browser you can peruse this library's docstrings at port 8000.
   as `"ab"` with no remainder.
 - Syntactic sugar for monadic structure of `Parser`. Probably context managers can be used to craft some makeshift
   Haskell-like `do` notation.
-- The failing tests in the `todos` module.
 - if `p` is a parser for some unbound typevar `U`, and `f` a function from `U` to `Any`, mypy does not deal well 
   with the expression `f * p`.
 
