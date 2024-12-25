@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
-from functional_parsing_library.strings.modules.word import word
+from functional_parsing_library import word
 
 
 def test_that_parsing_a_different_character_fails() -> None:

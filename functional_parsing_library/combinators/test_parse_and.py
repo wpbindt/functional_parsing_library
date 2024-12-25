@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds
-from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library import char
 
 
 def test_parse_and_deals_with_callables() -> None:

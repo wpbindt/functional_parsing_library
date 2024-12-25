@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds
-from functional_parsing_library.integer.integer import integer
+from functional_parsing_library import integer
 
 
 def test_that_we_can_parse_single_digits() -> None:

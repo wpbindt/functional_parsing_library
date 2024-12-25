@@ -1,9 +1,6 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds
-from functional_parsing_library.combinators import many
-from functional_parsing_library.combinators.sequence.n_times_parser import n_times
 from functional_parsing_library.fmap import to_int
-from functional_parsing_library.parser import Parser
-from functional_parsing_library.strings import digit
+from functional_parsing_library import Parser, digit, n_times, many
 
 
 def test_that_bind_can_be_used_to_construct_context_dependent_parsers() -> None:

@@ -1,7 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.combinators.sequence.until.many_till_exclusive import many_till_exclusive
-from functional_parsing_library.strings import char
-from functional_parsing_library.strings.modules.word import word
+from functional_parsing_library import many_till_exclusive, word, char
 
 
 def test_that_many_till_exclusive_matches_many_and_keeps_remainder() -> None:

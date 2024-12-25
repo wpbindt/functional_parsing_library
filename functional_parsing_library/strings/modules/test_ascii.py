@@ -3,7 +3,7 @@ from string import ascii_lowercase as ascii_lowercase_letters, ascii_uppercase a
 import pytest
 
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.strings.modules.ascii import ascii_lowercase, ascii_uppercase, ascii_letter
+from functional_parsing_library import ascii_lowercase, ascii_uppercase, ascii_letter
 
 
 @pytest.mark.parametrize('lowercase_letter', ascii_lowercase_letters)

@@ -1,7 +1,7 @@
 import pytest
 
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
-from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library import char
 
 
 def test_that_empty_strings_do_not_parse() -> None:

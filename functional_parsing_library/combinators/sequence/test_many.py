@@ -1,6 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.combinators.sequence.many import some, many
-from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library import some, many, char
 
 
 def test_some_parses_one() -> None:

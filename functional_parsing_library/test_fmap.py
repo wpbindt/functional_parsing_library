@@ -1,7 +1,6 @@
 from functional_parsing_library.asserts import assert_parsing_fails, assert_parsing_succeeds
 from functional_parsing_library.fmap import to_int
-from functional_parsing_library.parser import CouldNotParse
-from functional_parsing_library.strings.modules.char import char
+from functional_parsing_library import CouldNotParse, char
 
 
 def test_that_fmap_still_fails_to_parse_unparsable_stuff() -> None:

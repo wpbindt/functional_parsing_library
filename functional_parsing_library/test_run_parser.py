@@ -1,7 +1,6 @@
 import pytest
 
-from functional_parsing_library.run_parser import run_parser, ParsingError, NotFullyParsed
-from functional_parsing_library.strings import char
+from functional_parsing_library import run_parser, ParsingError, NotFullyParsed, char
 
 
 def test_run_parser_returns_parse_result_when_successful() -> None:

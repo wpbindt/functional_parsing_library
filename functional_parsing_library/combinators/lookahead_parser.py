@@ -1,6 +1,6 @@
 from typing import Any
 
-from functional_parsing_library.combinators import try_parser
+from functional_parsing_library.combinators.try_parser_ import try_parser
 from functional_parsing_library.parser import Parser, S
 
 

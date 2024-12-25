@@ -1,6 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds
-from functional_parsing_library.combinators.maybe import maybe
-from functional_parsing_library.strings import char
+from functional_parsing_library import maybe, char
 
 
 def test_maybe_parses_like_parser() -> None:

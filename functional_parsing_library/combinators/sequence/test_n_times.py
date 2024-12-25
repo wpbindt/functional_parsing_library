@@ -1,6 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.combinators.sequence.n_times_parser import n_times
-from functional_parsing_library.strings import char
+from functional_parsing_library import n_times, char
 
 
 def test_that_0_times_succeeds_with_empty_list() -> None:

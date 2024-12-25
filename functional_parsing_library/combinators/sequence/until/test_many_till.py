@@ -1,7 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.combinators.sequence.until.many_till import many_till
-from functional_parsing_library.strings import char
-from functional_parsing_library.strings.modules.word import word
+from functional_parsing_library import many_till, word, char
 
 
 def test_that_many_till_matches_many_and_consumes_delimiter() -> None:

@@ -1,5 +1,5 @@
 from functional_parsing_library.asserts import assert_parsing_succeeds, assert_parsing_fails
-from functional_parsing_library.strings.modules.char_satisfies import char_satisfies
+from functional_parsing_library import char_satisfies
 
 
 def test_char_satisfies_true_matches_any_character() -> None:
