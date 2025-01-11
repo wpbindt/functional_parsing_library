@@ -4,6 +4,8 @@ A small production non-ready Python library implementing basic applicative parse
 with signature `str -> T | CouldNotParse` transforming strings into structured data. For example, you might have a function
 `integer` which will transform `"1"` and `"-1919"` to the integers `1` and `-1919`, and the string `"boink"` to `CouldNotParse()`.
 
+For an extensive example of how to use this library, see [this](https://wpbindt.github.io/blog/parsing-addresses/) blog post.
+
 What makes these functions useful is that they can be combined with so-called parser combinators. This way, complicated parsers
 can be gradually built up from smaller, simpler parsers. 
 For example, if we already have parsers `nonnegative_integer` and `negative_integer`, the `integer` parser from earlier 
