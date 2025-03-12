@@ -1,9 +1,9 @@
 from typing import Any
 
-from functional_parsing_library.parser import Parser, U, ParseResults, CouldNotParse
+from functional_parsing_library.parser import Parser, U, ParseResults, CouldNotParse, TokenStream
 
 
-def some_till_exclusive(parser: Parser[U], until: Parser[Any]) -> Parser[list[U]]:
+def some_till_exclusive(parser: Parser[TokenStream, U], until: Parser[TokenStream, Any]) -> Parser[TokenStream, list[U]]:
     """
     Parses zero or more matches for parser, followed by a match for until. Does not consume the match for until.
     For example,
@@ -16,7 +16,7 @@ def some_till_exclusive(parser: Parser[U], until: Parser[Any]) -> Parser[list[U]
     >>> parser('b').result
     []
     """
-    def parse_function(to_parse: str) -> ParseResults[list[U]] | CouldNotParse:
+    def parse_function(to_parse: TokenStream) -> ParseResults[TokenStream, list[U]] | CouldNotParse:
         results: list[U] = []
         remainder = to_parse
         while True:

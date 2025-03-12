@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import Any, Generic, Self
 
-from functional_parsing_library.parser import Parser, S, CouldNotParse, ParseResults, FailureReason
+from functional_parsing_library.parser import Parser, S, CouldNotParse, ParseResults, FailureReason, TokenStream
 
 
 class _ParsingSuccessTestResult(Generic[S]):
     def __init__(
         self,
-        actual: ParseResults[S],
+        actual: ParseResults[TokenStream, S],
     ) -> None:
         self._actual = actual
 
@@ -21,7 +21,7 @@ class _ParsingSuccessTestResult(Generic[S]):
         return self
 
 
-def assert_parsing_succeeds(parser: Parser[S], to_parse: str) -> _ParsingSuccessTestResult[S]:
+def assert_parsing_succeeds(parser: Parser[TokenStream, S], to_parse: TokenStream) -> _ParsingSuccessTestResult[S]:
     result = parser(to_parse)
     assert not isinstance(result, CouldNotParse)
     return _ParsingSuccessTestResult(
@@ -38,7 +38,7 @@ class _ParsingFailureTestResult:
         return self
 
 
-def assert_parsing_fails(parser: Parser[Any], to_parse: str) -> _ParsingFailureTestResult:
+def assert_parsing_fails(parser: Parser[TokenStream, Any], to_parse: TokenStream) -> _ParsingFailureTestResult:
     result = parser(to_parse)
     assert isinstance(result, CouldNotParse)
     return _ParsingFailureTestResult(result)

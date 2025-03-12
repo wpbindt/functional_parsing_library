@@ -13,7 +13,7 @@ from functional_parsing_library.strings.modules.word import word
 valid_json_string_chars = string.ascii_letters + 'idk'
 json_string = ''.join * ((char('"') > many(char_in(valid_json_string_chars))) < char('"'))
 
-_json: RecursiveParser[Any] = RecursiveParser()
+_json: RecursiveParser[str, Any] = RecursiveParser()
 array = (char('[') > some_separated_by(_json.parser, word(', '))) < char(']')
 key_value_pair = (lambda t, s: (t, s)) * (json_string < word(': ')) & _json.parser
 json_object = dict * (

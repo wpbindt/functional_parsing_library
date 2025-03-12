@@ -1,9 +1,9 @@
 from typing import Any
 
-from functional_parsing_library.parser import Parser, T
+from functional_parsing_library.parser import Parser, T, TokenStream
 
 
-def ignore_right(left: Parser[T], right: Parser[Any]) -> Parser[T]:
+def ignore_right(left: Parser[TokenStream, T], right: Parser[TokenStream, Any]) -> Parser[TokenStream, T]:
     """
     Parses using the left parser, and then parses using the right. The result from the left parser is discarded. If the
     right parser is unable to match something, the parser fails. The `<` operator is overloaded to call this function.

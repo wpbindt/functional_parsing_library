@@ -5,7 +5,7 @@ from functional_parsing_library.parser import Parser, T
 from functional_parsing_library.strings.modules.word import word
 
 
-def separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:
+def separated_by(parser: Parser[str, T], separator: Parser[str, Any]) -> Parser[str, list[T]]:
     """
     Matches one or more (and as many as possible) matches of parser, separated by matches for separator.
     For example,
@@ -20,7 +20,7 @@ def separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:
 nothing = word('')
 
 
-def some_separated_by(parser: Parser[T], separator: Parser[Any]) -> Parser[list[T]]:
+def some_separated_by(parser: Parser[str, T], separator: Parser[str, Any]) -> Parser[str, list[T]]:
     """
     Matches zero or more (and as many as possible) matches of parser, separated by matches for separator.
     For example,

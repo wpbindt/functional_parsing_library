@@ -18,7 +18,7 @@ Leaf = int
 Expression = Leaf | Plus
 
 leaf = integer
-plus: RecursiveParser[Plus] = RecursiveParser()
+plus: RecursiveParser[str, Plus] = RecursiveParser()
 operand = ((char('(') > plus.parser) < char(')')) | leaf
 plus.parser = Plus * (operand < char('+')) & operand
 

@@ -4,7 +4,7 @@ from functional_parsing_library.parser import Parser
 from functional_parsing_library.strings.modules.char_satisfies import char_satisfies
 
 
-def char_in(string: Container[str]) -> Parser[str]:
+def char_in(string: Container[str]) -> Parser[str, str]:
     """
     Matches any character in the given string. For example,
     >>> parser = char_in('abcd')

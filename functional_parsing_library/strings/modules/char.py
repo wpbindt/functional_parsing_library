@@ -2,7 +2,7 @@ from functional_parsing_library.parser import Parser
 from functional_parsing_library.strings.modules.char_satisfies import char_satisfies
 
 
-def char(c: str) -> Parser[str]:
+def char(c: str) -> Parser[str, str]:
     """
     Creates a parser which parses a single character c. For example,
     >>> char('a')('aabcd').result

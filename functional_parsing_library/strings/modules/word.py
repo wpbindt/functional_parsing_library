@@ -1,7 +1,7 @@
 from functional_parsing_library.parser import Parser, ParseResults, CouldNotParse
 
 
-def word(word_to_parse_for: str) -> Parser[str]:
+def word(word_to_parse_for: str) -> Parser[str, str]:
     """
     Parse a given word. For example,
     >>> parser = word('train')
@@ -10,7 +10,7 @@ def word(word_to_parse_for: str) -> Parser[str]:
     >>> parser('training').remainder
     'ing'
     """
-    def parser(to_parse: str) -> ParseResults[str] | CouldNotParse:
+    def parser(to_parse: str) -> ParseResults[str, str] | CouldNotParse:
         if not to_parse.startswith(word_to_parse_for):
             return CouldNotParse(f'String "{to_parse}" does not start with "{word_to_parse_for}"')
         return ParseResults(word_to_parse_for, to_parse[len(word_to_parse_for):])

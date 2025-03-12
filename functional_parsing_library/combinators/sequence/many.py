@@ -1,7 +1,7 @@
-from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotParse
+from functional_parsing_library.parser import Parser, T, ParseResults, CouldNotParse, TokenStream
 
 
-def some(parser: Parser[T]) -> Parser[list[T]]:
+def some(parser: Parser[TokenStream, T]) -> Parser[TokenStream, list[T]]:
     """
     Parse at zero or more, and as many as possible, matches for parser. For example,
     >>> from functional_parsing_library.strings import char
@@ -10,7 +10,7 @@ def some(parser: Parser[T]) -> Parser[list[T]]:
     >>> some(char('a'))('b').result
     []
     """
-    def parser_(to_parse: str) -> ParseResults[list[T]]:
+    def parser_(to_parse: TokenStream) -> ParseResults[TokenStream, list[T]]:
         remainder = to_parse
         result: list[T] = []
         while remainder:
@@ -25,7 +25,7 @@ def some(parser: Parser[T]) -> Parser[list[T]]:
     return Parser(parser_)
 
 
-def many(parser: Parser[T]) -> Parser[list[T]]:
+def many(parser: Parser[TokenStream, T]) -> Parser[TokenStream, list[T]]:
     """
     Parse at least one, and as many as possible, matches for parser. For example,
     >>> from functional_parsing_library.strings import char

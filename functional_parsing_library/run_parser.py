@@ -10,7 +10,7 @@ class NotFullyParsed(Exception):
 
 
 def run_parser(
-    parser: Parser[S],
+    parser: Parser[str, S],
     to_parse: str,
     raise_on_remainder: bool = False,
 ) -> S:

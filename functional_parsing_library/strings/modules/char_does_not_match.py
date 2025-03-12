@@ -5,7 +5,7 @@ from functional_parsing_library.parser import Parser, ParseResults, CouldNotPars
 from functional_parsing_library.strings.modules.pop_one_character import pop_one_character
 
 
-def char_does_not_match(parser: Parser[Any]) -> Parser[str]:
+def char_does_not_match(parser: Parser[str, Any]) -> Parser[str, str]:
     """
     Match any character not matching the given parser. For example,
     >>> from functional_parsing_library.strings import digit
@@ -16,7 +16,7 @@ def char_does_not_match(parser: Parser[Any]) -> Parser[str]:
     True
     """
     @check_for_empty_string
-    def parser_(to_parse: str) -> ParseResults[str] | CouldNotParse:
+    def parser_(to_parse: str) -> ParseResults[str, str] | CouldNotParse:
         result = parser(to_parse)
         if not isinstance(result, CouldNotParse):
             return CouldNotParse()
