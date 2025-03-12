@@ -64,7 +64,6 @@ and in your browser you can peruse this library's docstrings at port 8000.
   Haskell-like `do` notation.
 - if `p` is a parser for some unbound typevar `U`, and `f` a function from `U` to `Any`, mypy does not deal well 
   with the expression `f * p`.
-- parse random iterables, not just strings
 
 
 ### Variable number of arguments

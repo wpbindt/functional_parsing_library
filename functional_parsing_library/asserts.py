@@ -16,7 +16,7 @@ class _ParsingSuccessTestResult(Generic[S]):
         assert self._actual.result == expected
         return self
 
-    def with_remainder(self, expected: str) -> _ParsingSuccessTestResult[S]:
+    def with_remainder(self, expected: TokenStream) -> _ParsingSuccessTestResult[S]:
         assert self._actual.remainder == expected
         return self
 
